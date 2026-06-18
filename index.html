@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What Should I Eat Tonight?</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- TOP NAVIGATION -->
+  <header class="top-nav">
+
+    <div class="nav-logo">
+      <img src="images/logo.svg" alt="Dinner logo">
+    </div>
+
+    <nav class="nav-links">
+      <a href="#home">Home</a>
+      <a href="#dinnerbot">Dinner Finder</a>
+      <a href="journal.html">Food Journal</a>
+      <a href="spinner.html">Food Spinner</a>
+      <a href="badges.html">Badge Collection</a>
+    </nav>
+
+  </header>
+
+
+  <!-- HOME / HERO SCROLL AREA -->
+  <section class="hero-scroll" id="home">
+
+    <div class="hero-sticky">
+
+      <img src="images/noodle.svg" class="doodle doodle1" alt="noodle">
+      <img src="images/sushi.svg" class="doodle doodle2" alt="cake">
+      <img src="images/burger.svg" class="doodle doodle3" alt="burger">
+      <img src="images/drink.svg" class="doodle doodle4" alt="drink">
+      <img src="images/pizza.svg" class="doodle doodle5" alt="croissant">
+
+      <h1 class="hero-title">DINNER</h1>
+
+      <p class="hero-subtitle">
+        WHAT SHOULD I EAT TONIGHT?
+      </p>
+
+      <p class="transition-text">
+        Should I eat noodles, rice, or what should I eat tonight...
+      </p>
+
+      <div class="scroll-text">↓ Scroll</div>
+
+    </div>
+
+  </section>
+
+
+  <!-- DINNER FINDER / DINNER BOT SECTION -->
+  <section class="chatbot-section" id="dinnerbot">
+
+    <div class="chatbot-wrapper">
+
+      <div class="chatbot-text">
+        <h2>DinnerBot</h2>
+        <p>
+          Still can't decide? Ask DinnerBot for help.
+          It can suggest dinner ideas based on your mood, budget, and cravings.
+        </p>
+      </div>
+
+      <div class="chat-window">
+
+        <div id="chatMessages">
+          <div class="message bot">
+            Hi! I am DinnerBot. I can help you decide what to eat tonight.
+          </div>
+        </div>
+
+        <div class="chat-input">
+          <input id="userInput" type="text" placeholder="Type your dinner question...">
+          <button id="sendBtn">Send</button>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- DINNER OPTIONS / INTERACTIVE VIDEO SECTION -->
+  <section class="dinner-menu-section" id="dinner-options">
+
+    <h2>Dinner Options</h2>
+
+    <p class="section-subtitle">
+      Watch the interactive dinner video and choose your dinner path.
+    </p>
+
+    <div class="interactive-video-box">
+
+      <video id="dinnerVideo" controls>
+        <source src="videos/video1.mp4" type="video/mp4">
+      </video>
+
+      <div class="video-choices" id="videoChoices">
+
+        <h3>What will you choose?</h3>
+
+        <p>Pick one option to continue your dinner journey.</p>
+
+        <div class="choice-buttons">
+
+          <button onclick="changeVideo('videos/video3.mp4')">
+            I want Tteokbokki
+          </button>
+
+          <button onclick="changeVideo('videos/video2.mp4')">
+            I want egg fried rice
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <button class="restart-button" onclick="restartVideo()">
+      Restart
+    </button>
+
+  </section>
+
+
+  <script src="script.js"></script>
+
+</body>
+</html>

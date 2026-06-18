@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food Journal</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    .journal-month-page {
+      min-height: 100vh;
+      padding-top: 110px;
+      padding-bottom: 80px;
+      background: #f7f4ee;
+      color: #6f5538;
+    }
+
+    .journal-app {
+      width: 92%;
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .journal-top {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .journal-top h1 {
+      font-family: 'Patrick Hand', cursive;
+      font-size: 84px;
+      color: #4b2f2f;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .journal-top p {
+      font-size: 18px;
+      color: #8b6f4e;
+    }
+
+    .year-control {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 14px;
+      margin: 22px 0 14px;
+    }
+
+    .year-control button {
+      border: none;
+      background: #ead6b8;
+      color: #8b6f4e;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    .year-control span {
+      font-family: 'Patrick Hand', cursive;
+      font-size: 32px;
+      color: #4b2f2f;
+    }
+
+    .month-bar {
+      margin: 18px auto 34px;
+      background: rgba(255,255,255,0.9);
+      border-radius: 999px;
+      padding: 12px;
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      box-shadow: 0 14px 34px rgba(0,0,0,0.05);
+    }
+
+    .month-btn {
+      border: none;
+      background: transparent;
+      color: #8b6f4e;
+      font-family: 'Patrick Hand', cursive;
+      font-size: 22px;
+      padding: 8px 16px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .month-btn:hover,
+    .month-btn.active {
+      background: #ead6b8;
+      transform: translateY(-2px);
+    }
+
+    .calendar-card {
+      background: rgba(255,255,255,0.9);
+      border-radius: 34px;
+      padding: 30px 28px 24px;
+      box-shadow: 0 14px 40px rgba(0,0,0,0.06);
+      margin-bottom: 26px;
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 14px;
+    }
+
+    .weekday {
+      text-align: center;
+      font-family: 'Patrick Hand', cursive;
+      font-size: 28px;
+      color: #9a9088;
+      padding-bottom: 8px;
+    }
+
+    .day-cell {
+      min-height: 125px;
+      background: #f1efeb;
+      border-radius: 22px;
+      padding: 10px;
+      position: relative;
+      overflow: visible;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: 0.2s;
+    }
+
+    .day-cell:hover {
+      transform: translateY(-3px);
+      background: #ece7df;
+    }
+
+    .day-number {
+      font-size: 24px;
+      color: #5d5148;
+      font-family: 'Patrick Hand', cursive;
+      line-height: 1;
+    }
+
+    .day-entries {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-content: flex-start;
+    }
+
+    .entry-thumb {
+      width: 50px;
+      height: 50px;
+      border-radius: 18px;
+      overflow: visible;
+      background: transparent;
+      cursor: pointer;
+      flex-shrink: 0;
+      animation: stickerPop 0.45s ease both;
+    }
+
+    .entry-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 15px;
+      border: 5px solid white;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.14);
+      background: white;
+    }
+
+    .entry-thumb-text {
+      width: 50px;
+      height: 50px;
+      border-radius: 16px;
+      background: #ead6b8;
+      color: #8b6f4e;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 11px;
+      text-align: center;
+      padding: 4px;
+      line-height: 1.1;
+      font-weight: bold;
+      cursor: pointer;
+      border: 4px solid white;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+      animation: stickerPop 0.45s ease both;
+    }
+
+    .empty-cell {
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .journal-summary {
+      background: rgba(255,255,255,0.9);
+      border-radius: 34px;
+      padding: 28px;
+      box-shadow: 0 14px 40px rgba(0,0,0,0.06);
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 24px;
+      align-items: center;
+      margin-bottom: 26px;
+    }
+
+    .summary-left h2 {
+      font-family: 'Patrick Hand', cursive;
+      font-size: 42px;
+      color: #6f5538;
+      margin-bottom: 10px;
+    }
+
+    .summary-number {
+      font-size: 58px;
+      font-weight: bold;
+      color: #4b2f2f;
+      line-height: 1;
+    }
+
+    .summary-label {
+      font-size: 20px;
+      color: #8b6f4e;
+      margin-top: 8px;
+    }
+
+    .summary-strip {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .summary-strip .entry-thumb {
+      width: 86px;
+      height: 86px;
+    }
+
+    .summary-strip .entry-thumb img {
+      border-radius: 22px;
+    }
+
+    .journal-form-card {
+      background: rgba(255,255,255,0.9);
+      border-radius: 34px;
+      padding: 30px;
+      box-shadow: 0 14px 40px rgba(0,0,0,0.06);
+    }
+
+    .journal-form-card h2 {
+      font-family: 'Patrick Hand', cursive;
+      font-size: 46px;
+      color: #6f5538;
+      margin-bottom: 18px;
+    }
+
+    .journal-form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .journal-form-full {
+      grid-column: 1 / -1;
+    }
+
+    .journal-form-card label {
+      display: block;
+      margin-bottom: 8px;
+      font-family: 'Patrick Hand', cursive;
+      font-size: 24px;
+      color: #8b6f4e;
+    }
+
+    .journal-form-card input,
+    .journal-form-card textarea {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 18px;
+      border: 1.5px solid #c8b9a4;
+      background: #fbf8f3;
+      color: #6f5538;
+      font-size: 16px;
+    }
+
+    .journal-form-card textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .journal-form-card button {
+      margin-top: 22px;
+      padding: 14px 28px;
+      border: none;
+      border-radius: 999px;
+      background: #8b6f4e;
+      color: white;
+      font-family: 'Patrick Hand', cursive;
+      font-size: 28px;
+      cursor: pointer;
+      transition: 0.2s ease;
+      margin-right: 12px;
+    }
+
+    .journal-form-card button:hover {
+      opacity: 0.88;
+      transform: translateY(-2px);
+    }
+
+    .clear-btn {
+      background: #ead6b8 !important;
+      color: #8b6f4e !important;
+    }
+
+    .small-note {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #9a9088;
+    }
+
+    .detail-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(60, 45, 35, 0.28);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+      padding: 30px;
+    }
+
+    .detail-card {
+      width: 92%;
+      max-width: 620px;
+      max-height: 92vh;
+      overflow-y: auto;
+      background: #fbf8f3;
+      border-radius: 44px;
+      padding: 34px;
+      box-shadow: 0 25px 80px rgba(0,0,0,0.2);
+      position: relative;
+      text-align: center;
+      animation: detailIn 0.3s ease both;
+    }
+
+    .detail-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .detail-top button {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      border: none;
+      background: white;
+      color: #8b6f4e;
+      font-size: 30px;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    }
+
+    .detail-top h2 {
+      font-family: 'Patrick Hand', cursive;
+      font-size: 42px;
+      color: #4b2f2f;
+    }
+
+    .detail-photo {
+      width: 220px;
+      height: 220px;
+      margin: 10px auto 28px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .detail-photo img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: cover;
+      border-radius: 32px;
+      border: 10px solid white;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.16);
+      animation: stickerPop 0.5s ease both;
+    }
+
+    .detail-photo-empty {
+      width: 180px;
+      height: 180px;
+      border-radius: 34px;
+      background: #ead6b8;
+      color: #8b6f4e;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Patrick Hand', cursive;
+      font-size: 36px;
+      border: 10px solid white;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.14);
+    }
+
+    .detail-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 10px;
+    }
+
+    .detail-row {
+      background: white;
+      border-radius: 22px;
+      padding: 18px 22px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      text-align: left;
+      color: #4b2f2f;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+    }
+
+    .detail-icon {
+      font-size: 24px;
+      width: 30px;
+      text-align: center;
+      color: #c28a3d;
+    }
+
+    .detail-row strong {
+      display: block;
+      font-family: 'Patrick Hand', cursive;
+      font-size: 26px;
+      color: #4b2f2f;
+    }
+
+    .detail-row span {
+      color: #8b6f4e;
+      font-size: 16px;
+    }
+
+    .delete-btn {
+      margin-top: 28px;
+      border: none;
+      background: transparent;
+      color: #9a9088;
+      font-family: 'Patrick Hand', cursive;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    @keyframes stickerPop {
+      0% {
+        transform: scale(0.82) rotate(-6deg);
+        opacity: 0;
+      }
+
+      70% {
+        transform: scale(1.08) rotate(3deg);
+        opacity: 1;
+      }
+
+      100% {
+        transform: scale(1) rotate(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes detailIn {
+      from {
+        transform: translateY(30px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .calendar-grid {
+        gap: 10px;
+      }
+
+      .day-cell {
+        min-height: 96px;
+        padding: 8px;
+      }
+
+      .journal-summary {
+        grid-template-columns: 1fr;
+      }
+
+      .journal-form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .journal-top h1 {
+        font-size: 64px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="top-nav">
+    <div class="nav-logo">
+      <a href="index.html">
+        <img src="images/logo.svg" alt="Dinner logo">
+      </a>
+    </div>
+
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#dinnerbot">Dinner Finder</a>
+      <a href="journal.html">Food Journal</a>
+      <a href="spinner.html">Food Spinner</a>
+      <a href="badges.html">Badge Collection</a>
+    </nav>
+  </header>
+
+  <main class="journal-month-page">
+    <div class="journal-app">
+
+      <section class="journal-top">
+        <h1 id="monthTitle">May</h1>
+        <p id="yearTitle">2026</p>
+
+        <div class="year-control">
+          <button onclick="changeYear(-1)">‹</button>
+          <span id="yearDisplay">2026</span>
+          <button onclick="changeYear(1)">›</button>
+        </div>
+
+        <div class="month-bar" id="monthBar"></div>
+      </section>
+
+      <section class="calendar-card">
+        <div class="calendar-grid" id="calendarGrid"></div>
+      </section>
+
+      <section class="journal-summary">
+        <div class="summary-left">
+          <h2>This Month</h2>
+          <div class="summary-number" id="monthlyCount">0</div>
+          <div class="summary-label">meals recorded</div>
+        </div>
+
+        <div class="summary-strip" id="summaryStrip"></div>
+      </section>
+
+      <section class="journal-form-card">
+        <h2>Add Meal Record</h2>
+
+        <div class="journal-form-grid">
+          <div>
+            <label for="entryDate">Date</label>
+            <input type="date" id="entryDate">
+          </div>
+
+          <div>
+            <label for="entryTime">Time</label>
+            <input type="time" id="entryTime">
+          </div>
+
+          <div>
+            <label for="foodName">Food Name</label>
+            <input type="text" id="foodName" placeholder="Example: Egg Fried Rice">
+          </div>
+
+          <div>
+            <label for="foodPlace">Place</label>
+            <input type="text" id="foodPlace" placeholder="Example: home">
+          </div>
+
+          <div>
+            <label for="foodLocation">Location</label>
+            <input type="text" id="foodLocation" placeholder="Example: Singapore">
+          </div>
+
+          <div>
+            <label for="foodShop">Shop / Style</label>
+            <input type="text" id="foodShop" placeholder="Example: homemade / Korean">
+          </div>
+
+          <div class="journal-form-full">
+            <label for="foodNote">Notes</label>
+            <textarea id="foodNote" placeholder="Write a short note about this meal..."></textarea>
+          </div>
+
+          <div class="journal-form-full">
+            <label for="foodPhoto">Upload Meal Photo</label>
+            <input type="file" id="foodPhoto" accept="image/*">
+          </div>
+        </div>
+
+        <button onclick="addMealEntry()">Add to Journal</button>
+        <button class="clear-btn" onclick="clearJournalData()">Clear Journal Data</button>
+
+        <p class="small-note">
+          Photos are automatically compressed before saving. Click a meal sticker on the calendar to open its detail page.
+        </p>
+      </section>
+
+    </div>
+  </main>
+
+  <div class="detail-overlay" id="detailOverlay">
+    <div class="detail-card">
+
+      <div class="detail-top">
+        <button onclick="closeDetail()">×</button>
+        <h2>Meal Detail</h2>
+        <button onclick="closeDetail()">✓</button>
+      </div>
+
+      <div class="detail-photo" id="detailPhoto"></div>
+
+      <div class="detail-list">
+        <div class="detail-row">
+          <div class="detail-icon">📅</div>
+          <div>
+            <strong id="detailDate">Date</strong>
+            <span>Date and time</span>
+          </div>
+        </div>
+
+        <div class="detail-row">
+          <div class="detail-icon">🏠</div>
+          <div>
+            <strong id="detailPlace">Place</strong>
+            <span>Where I ate</span>
+          </div>
+        </div>
+
+        <div class="detail-row">
+          <div class="detail-icon">📍</div>
+          <div>
+            <strong id="detailLocation">Location</strong>
+            <span>City / country</span>
+          </div>
+        </div>
+
+        <div class="detail-row">
+          <div class="detail-icon">🍽</div>
+          <div>
+            <strong id="detailFood">Food</strong>
+            <span id="detailShop">Shop or style</span>
+          </div>
+        </div>
+
+        <div class="detail-row">
+          <div class="detail-icon">✎</div>
+          <div>
+            <strong id="detailNote">Notes</strong>
+            <span>Meal memory</span>
+          </div>
+        </div>
+      </div>
+
+      <button class="delete-btn" onclick="deleteCurrentEntry()">Delete Meal</button>
+
+    </div>
+  </div>
+
+  <script>
+    const monthTitle = document.getElementById("monthTitle");
+    const yearTitle = document.getElementById("yearTitle");
+    const yearDisplay = document.getElementById("yearDisplay");
+    const monthBar = document.getElementById("monthBar");
+    const calendarGrid = document.getElementById("calendarGrid");
+    const summaryStrip = document.getElementById("summaryStrip");
+    const monthlyCount = document.getElementById("monthlyCount");
+
+    const detailOverlay = document.getElementById("detailOverlay");
+    const detailPhoto = document.getElementById("detailPhoto");
+    const detailDate = document.getElementById("detailDate");
+    const detailPlace = document.getElementById("detailPlace");
+    const detailLocation = document.getElementById("detailLocation");
+    const detailFood = document.getElementById("detailFood");
+    const detailShop = document.getElementById("detailShop");
+    const detailNote = document.getElementById("detailNote");
+
+    const STORAGE_KEY = "dinnerJournalEntriesV2";
+
+    let entries = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    let currentDetailId = null;
+
+    const monthNames = [
+      "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+
+    const monthShort = [
+      "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ];
+
+    const today = new Date();
+    let selectedYear = today.getFullYear();
+    let selectedMonth = today.getMonth();
+
+    createMonthBar();
+    renderCalendar();
+
+    function createMonthBar() {
+      monthBar.innerHTML = "";
+
+      monthShort.forEach((month, index) => {
+        const btn = document.createElement("button");
+        btn.className = "month-btn";
+        btn.textContent = month;
+
+        btn.onclick = function() {
+          selectedMonth = index;
+          renderCalendar();
+        };
+
+        monthBar.appendChild(btn);
+      });
+    }
+
+    function changeYear(amount) {
+      selectedYear += amount;
+      renderCalendar();
+    }
+
+    function saveEntries() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+      } catch (error) {
+        alert("Storage is full. Please click Clear Journal Data or upload smaller photos.");
+      }
+    }
+
+    function renderCalendar() {
+      monthTitle.textContent = monthNames[selectedMonth];
+      yearTitle.textContent = selectedYear;
+      yearDisplay.textContent = selectedYear;
+
+      document.querySelectorAll(".month-btn").forEach((btn, index) => {
+        if (index === selectedMonth) {
+          btn.classList.add("active");
+        } else {
+          btn.classList.remove("active");
+        }
+      });
+
+      calendarGrid.innerHTML = "";
+
+      const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+      weekdays.forEach(day => {
+        const wd = document.createElement("div");
+        wd.className = "weekday";
+        wd.textContent = day;
+        calendarGrid.appendChild(wd);
+      });
+
+      const firstDay = new Date(selectedYear, selectedMonth, 1).getDay();
+      const daysInMonth = new Date(selectedYear, selectedMonth + 1, 0).getDate();
+
+      for (let i = 0; i < firstDay; i++) {
+        const empty = document.createElement("div");
+        empty.className = "day-cell empty-cell";
+        calendarGrid.appendChild(empty);
+      }
+
+      const selectedString = `${selectedYear}-${String(selectedMonth + 1).padStart(2, "0")}`;
+      const monthEntries = entries.filter(entry => entry.date.startsWith(selectedString));
+      monthlyCount.textContent = monthEntries.length;
+
+      for (let day = 1; day <= daysInMonth; day++) {
+        const cell = document.createElement("div");
+        cell.className = "day-cell";
+
+        const num = document.createElement("div");
+        num.className = "day-number";
+        num.textContent = day;
+        cell.appendChild(num);
+
+        const entryBox = document.createElement("div");
+        entryBox.className = "day-entries";
+
+        const dayString = String(day).padStart(2, "0");
+        const fullDate = `${selectedString}-${dayString}`;
+        const dayEntries = entries.filter(entry => entry.date === fullDate);
+
+        dayEntries.forEach(entry => {
+          const sticker = createSticker(entry);
+          entryBox.appendChild(sticker);
+        });
+
+        cell.appendChild(entryBox);
+        calendarGrid.appendChild(cell);
+      }
+
+      renderSummary(monthEntries);
+    }
+
+    function createSticker(entry) {
+      if (entry.photo) {
+        const thumb = document.createElement("div");
+        thumb.className = "entry-thumb";
+        thumb.title = entry.foodName;
+        thumb.onclick = function() {
+          openDetail(entry.id);
+        };
+
+        const img = document.createElement("img");
+        img.src = entry.photo;
+        img.alt = entry.foodName;
+
+        thumb.appendChild(img);
+        return thumb;
+      }
+
+      const textThumb = document.createElement("div");
+      textThumb.className = "entry-thumb-text";
+      textThumb.title = entry.foodName;
+      textThumb.textContent = entry.foodName.slice(0, 8);
+      textThumb.onclick = function() {
+        openDetail(entry.id);
+      };
+
+      return textThumb;
+    }
+
+    function renderSummary(monthEntries) {
+      summaryStrip.innerHTML = "";
+
+      if (monthEntries.length === 0) {
+        summaryStrip.innerHTML = "<p style='color:#9a9088;'>No meals recorded for this month yet.</p>";
+        return;
+      }
+
+      monthEntries.slice(0, 12).forEach(entry => {
+        const sticker = createSticker(entry);
+        summaryStrip.appendChild(sticker);
+      });
+    }
+
+    function addMealEntry() {
+      const entryDate = document.getElementById("entryDate").value;
+      const entryTime = document.getElementById("entryTime").value;
+      const foodName = document.getElementById("foodName").value.trim();
+      const foodPlace = document.getElementById("foodPlace").value.trim();
+      const foodLocation = document.getElementById("foodLocation").value.trim();
+      const foodShop = document.getElementById("foodShop").value.trim();
+      const foodNote = document.getElementById("foodNote").value.trim();
+      const foodPhoto = document.getElementById("foodPhoto").files[0];
+
+      if (!entryDate || !foodName) {
+        alert("Please choose a date and enter a food name.");
+        return;
+      }
+
+      const newEntry = {
+        id: Date.now(),
+        date: entryDate,
+        time: entryTime || "No time added",
+        foodName: foodName,
+        place: foodPlace || "home",
+        location: foodLocation || "Singapore",
+        shop: foodShop || "Dinner style",
+        note: foodNote || "Notes optional...",
+        photo: ""
+      };
+
+      if (foodPhoto) {
+        compressImage(foodPhoto, function(compressedImage) {
+          newEntry.photo = compressedImage;
+          entries.push(newEntry);
+          saveEntries();
+          clearForm();
+          autoSwitchMonth(entryDate);
+          renderCalendar();
+        });
+      } else {
+        entries.push(newEntry);
+        saveEntries();
+        clearForm();
+        autoSwitchMonth(entryDate);
+        renderCalendar();
+      }
+    }
+
+    function compressImage(file, callback) {
+      const reader = new FileReader();
+
+      reader.onload = function(event) {
+        const img = new Image();
+
+        img.onload = function() {
+          const canvas = document.createElement("canvas");
+          const maxSize = 500;
+
+          let width = img.width;
+          let height = img.height;
+
+          if (width > height) {
+            if (width > maxSize) {
+              height = height * (maxSize / width);
+              width = maxSize;
+            }
+          } else {
+            if (height > maxSize) {
+              width = width * (maxSize / height);
+              height = maxSize;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0, width, height);
+
+          const compressedDataUrl = canvas.toDataURL("image/jpeg", 0.62);
+
+          callback(compressedDataUrl);
+        };
+
+        img.src = event.target.result;
+      };
+
+      reader.readAsDataURL(file);
+    }
+
+    function clearForm() {
+      document.getElementById("entryDate").value = "";
+      document.getElementById("entryTime").value = "";
+      document.getElementById("foodName").value = "";
+      document.getElementById("foodPlace").value = "";
+      document.getElementById("foodLocation").value = "";
+      document.getElementById("foodShop").value = "";
+      document.getElementById("foodNote").value = "";
+      document.getElementById("foodPhoto").value = "";
+    }
+
+    function autoSwitchMonth(dateString) {
+      const dateParts = dateString.split("-");
+      selectedYear = Number(dateParts[0]);
+      selectedMonth = Number(dateParts[1]) - 1;
+    }
+
+    function openDetail(entryId) {
+      const entry = entries.find(item => item.id === entryId);
+
+      if (!entry) {
+        return;
+      }
+
+      currentDetailId = entryId;
+
+      detailPhoto.innerHTML = "";
+
+      if (entry.photo) {
+        const img = document.createElement("img");
+        img.src = entry.photo;
+        img.alt = entry.foodName;
+        detailPhoto.appendChild(img);
+      } else {
+        const emptyPhoto = document.createElement("div");
+        emptyPhoto.className = "detail-photo-empty";
+        emptyPhoto.textContent = "🍽";
+        detailPhoto.appendChild(emptyPhoto);
+      }
+
+      const readableDate = formatDate(entry.date, entry.time);
+
+      detailDate.textContent = readableDate;
+      detailPlace.textContent = entry.place;
+      detailLocation.textContent = entry.location;
+      detailFood.textContent = entry.foodName;
+      detailShop.textContent = entry.shop;
+      detailNote.textContent = entry.note;
+
+      detailOverlay.style.display = "flex";
+    }
+
+    function closeDetail() {
+      detailOverlay.style.display = "none";
+    }
+
+    function deleteCurrentEntry() {
+      if (!currentDetailId) {
+        return;
+      }
+
+      entries = entries.filter(entry => entry.id !== currentDetailId);
+      saveEntries();
+      closeDetail();
+      renderCalendar();
+    }
+
+    function formatDate(dateString, timeString) {
+      const date = new Date(dateString + "T00:00:00");
+
+      const month = monthNames[date.getMonth()];
+      const day = date.getDate();
+      const year = date.getFullYear();
+
+      return `${month} ${day}, ${year}, ${timeString}`;
+    }
+
+    function clearJournalData() {
+      const confirmClear = confirm("This will delete all Food Journal records. Are you sure?");
+
+      if (!confirmClear) {
+        return;
+      }
+
+      entries = [];
+      localStorage.removeItem(STORAGE_KEY);
+      renderCalendar();
+      alert("Journal data cleared.");
+    }
+  </script>
+
+</body>
+</html>

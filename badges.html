@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Badge Collection</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    .stamp-page {
+      min-height: 100vh;
+      padding-top: 120px;
+      padding-bottom: 90px;
+      background: linear-gradient(
+        to bottom,
+        #fbf6ec 0%,
+        #f7f1e7 50%,
+        #ead6b8 100%
+      );
+      color: #6f5538;
+    }
+
+    .stamp-container {
+      width: 92%;
+      max-width: 1320px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .stamp-header h1 {
+      font-family: 'Patrick Hand', cursive;
+      font-size: 90px;
+      color: #4b2f2f;
+      margin-bottom: 6px;
+    }
+
+    .stamp-header p {
+      font-size: 22px;
+      color: #8b6f4e;
+      letter-spacing: 1px;
+      margin-bottom: 28px;
+    }
+
+    .stamp-stats {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      flex-wrap: wrap;
+      margin-bottom: 42px;
+      font-family: 'Patrick Hand', cursive;
+      font-size: 28px;
+      color: #8b6f4e;
+    }
+
+    .stamp-stats span {
+      background: rgba(255,255,255,0.86);
+      border-radius: 999px;
+      padding: 10px 24px;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.05);
+    }
+
+    .special-section {
+      margin-bottom: 64px;
+    }
+
+    .special-section h2 {
+      font-family: 'Patrick Hand', cursive;
+      font-size: 58px;
+      color: #4b2f2f;
+      margin-bottom: 10px;
+    }
+
+    .special-section p {
+      color: #8b6f4e;
+      font-size: 19px;
+      margin-bottom: 32px;
+    }
+
+    .ticket-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 34px;
+      justify-items: center;
+    }
+
+    .ticket-badge {
+      width: 210px;
+      min-height: 355px;
+      position: relative;
+      background: #fff8e9;
+      border: 2.5px solid #6f5538;
+      color: #5a3d2c;
+      padding: 18px 16px;
+      box-shadow: 0 12px 32px rgba(75,47,47,0.14);
+      cursor: pointer;
+      animation: ticketIn 0.45s ease both;
+      clip-path: polygon(
+        8% 0%, 92% 0%,
+        92% 5%, 100% 5%,
+        100% 95%, 92% 95%,
+        92% 100%, 8% 100%,
+        8% 95%, 0% 95%,
+        0% 5%, 8% 5%
+      );
+      transition: 0.25s ease;
+    }
+
+    .ticket-badge:hover {
+      transform: translateY(-8px) rotate(-2deg);
+      box-shadow: 0 18px 44px rgba(75,47,47,0.18);
+    }
+
+    .ticket-badge.locked {
+      opacity: 0.36;
+      filter: grayscale(0.8);
+      cursor: not-allowed;
+    }
+
+    .ticket-badge.locked:hover {
+      transform: none;
+    }
+
+    .ticket-badge::before,
+    .ticket-badge::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      width: 38px;
+      height: 38px;
+      background: #f7f1e7;
+      border-radius: 50%;
+      border: 2px solid #6f5538;
+      transform: translateX(-50%);
+      z-index: 2;
+    }
+
+    .ticket-badge::before {
+      top: -22px;
+    }
+
+    .ticket-badge::after {
+      bottom: -22px;
+    }
+
+    .ticket-inner {
+      border: 2px dashed rgba(111,85,56,0.62);
+      min-height: 315px;
+      padding: 12px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      background:
+        linear-gradient(rgba(255,255,255,0.28), rgba(255,255,255,0.28)),
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 8px,
+          rgba(111,85,56,0.04) 9px
+        );
+    }
+
+    .ticket-top {
+      font-family: 'Patrick Hand', cursive;
+      font-size: 16px;
+      letter-spacing: 0.8px;
+      line-height: 1.05;
+      border-bottom: 1.6px solid #6f5538;
+      padding-bottom: 8px;
+      width: 100%;
+    }
+
+    .ticket-name {
+      font-family: 'Patrick Hand', cursive;
+      font-size: 28px;
+      line-height: 1;
+      margin: 8px 0 4px;
+      color: #4b2f2f;
+    }
+
+    .ticket-icon {
+      width: 118px;
+      height: 118px;
+      margin: 8px 0;
+    }
+
+    .ticket-desc {
+      border-top: 1.6px solid #6f5538;
+      padding-top: 8px;
+      font-size: 13px;
+      line-height: 1.25;
+      color: #5a3d2c;
+    }
+
+    .ticket-status {
+      margin-top: 8px;
+      font-family: 'Patrick Hand', cursive;
+      font-size: 18px;
+      color: #8b6f4e;
+    }
+
+    .meal-section-title {
+      font-family: 'Patrick Hand', cursive;
+      font-size: 58px;
+      color: #4b2f2f;
+      margin: 26px 0 22px;
+    }
+
+    .stamp-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 64px 64px;
+      justify-items: center;
+      margin-top: 28px;
+    }
+
+    .stamp-card {
+      width: 330px;
+      height: 330px;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      animation: stampIn 0.45s ease both;
+    }
+
+    .stamp-shape {
+      width: 315px;
+      height: 315px;
+      position: absolute;
+      inset: 0;
+      margin: auto;
+      filter: drop-shadow(0 10px 16px rgba(0,0,0,0.06));
+    }
+
+    .stamp-content {
+      position: relative;
+      z-index: 2;
+      width: 230px;
+      height: 230px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transform: rotate(-4deg) translateY(2px);
+    }
+
+    .stamp-place {
+      font-family: 'Patrick Hand', cursive;
+      color: #438bb9;
+      font-size: 36px;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      line-height: 1;
+      max-width: 190px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .stamp-photo {
+      width: 128px;
+      height: 128px;
+      border-radius: 36px;
+      background: #ead6b8;
+      border: 9px solid white;
+      box-shadow: 0 9px 22px rgba(0,0,0,0.15);
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 54px;
+    }
+
+    .stamp-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .stamp-food {
+      font-family: 'Patrick Hand', cursive;
+      color: #4b2f2f;
+      font-size: 24px;
+      margin-top: 8px;
+      max-width: 190px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .stamp-date {
+      font-family: 'Patrick Hand', cursive;
+      color: #438bb9;
+      font-size: 25px;
+      letter-spacing: 1.5px;
+      margin-top: 4px;
+      line-height: 1.1;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .empty-stamp {
+      opacity: 0.28;
+      filter: grayscale(0.7);
+    }
+
+    .empty-stamp .stamp-photo {
+      background: #e6e0d8;
+      color: #9a9088;
+    }
+
+    .stamp-actions {
+      margin-top: 48px;
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .stamp-actions a,
+    .stamp-actions button {
+      border: none;
+      border-radius: 999px;
+      padding: 12px 26px;
+      background: #8b6f4e;
+      color: white;
+      text-decoration: none;
+      font-family: 'Patrick Hand', cursive;
+      font-size: 26px;
+      cursor: pointer;
+    }
+
+    .stamp-actions button {
+      background: #ead6b8;
+      color: #8b6f4e;
+    }
+
+    .ticket-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(45, 32, 24, 0.35);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+      padding: 30px;
+    }
+
+    .ticket-detail-card {
+      width: 92%;
+      max-width: 560px;
+      background: #fff8e9;
+      border-radius: 38px;
+      padding: 34px;
+      box-shadow: 0 25px 80px rgba(0,0,0,0.25);
+      border: 2px solid #6f5538;
+      text-align: center;
+      animation: detailIn 0.3s ease both;
+    }
+
+    .ticket-detail-card h2 {
+      font-family: 'Patrick Hand', cursive;
+      font-size: 52px;
+      color: #4b2f2f;
+      margin-bottom: 12px;
+    }
+
+    .ticket-detail-card p {
+      color: #6f5538;
+      font-size: 18px;
+      line-height: 1.5;
+      margin-bottom: 18px;
+    }
+
+    .detail-icon-box {
+      width: 180px;
+      height: 180px;
+      margin: 0 auto 18px;
+    }
+
+    .close-ticket-detail {
+      border: none;
+      border-radius: 999px;
+      padding: 10px 24px;
+      background: #8b6f4e;
+      color: white;
+      font-family: 'Patrick Hand', cursive;
+      font-size: 26px;
+      cursor: pointer;
+    }
+
+    @keyframes ticketIn {
+      0% {
+        transform: translateY(24px) scale(0.85) rotate(-4deg);
+        opacity: 0;
+      }
+
+      100% {
+        transform: translateY(0) scale(1) rotate(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes stampIn {
+      0% {
+        transform: scale(0.75) rotate(-8deg);
+        opacity: 0;
+      }
+
+      70% {
+        transform: scale(1.08) rotate(4deg);
+        opacity: 1;
+      }
+
+      100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+      }
+    }
+
+    @keyframes detailIn {
+      from {
+        transform: translateY(30px) scale(0.92);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+    }
+
+    @media (max-width: 1180px) {
+      .ticket-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .stamp-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 820px) {
+      .ticket-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 720px) {
+      .ticket-grid,
+      .stamp-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stamp-header h1 {
+        font-size: 66px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="top-nav">
+    <div class="nav-logo">
+      <a href="index.html">
+        <img src="images/logo.svg" alt="Dinner logo">
+      </a>
+    </div>
+
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#dinnerbot">Dinner Finder</a>
+      <a href="journal.html">Food Journal</a>
+      <a href="spinner.html">Food Spinner</a>
+      <a href="badges.html">Badge Collection</a>
+    </nav>
+  </header>
+
+  <main class="stamp-page">
+
+    <div class="stamp-container">
+
+      <section class="stamp-header">
+        <h1>Badge Collection</h1>
+        <p id="stampSummary">0 stamps * 0 meals * 0 places</p>
+      </section>
+
+      <section class="stamp-stats">
+        <span id="stampCount">0 meal stamps collected</span>
+        <span id="specialStatus">0 special tickets unlocked</span>
+      </section>
+
+      <section class="special-section">
+        <h2>Special Ticket Badges</h2>
+        <p>
+          Unlock special vintage tickets by recording meals and different food types.
+        </p>
+
+        <div class="ticket-grid" id="ticketGrid"></div>
+      </section>
+
+      <h2 class="meal-section-title">Meal Stamps</h2>
+
+      <section class="stamp-grid" id="stampGrid"></section>
+
+      <div class="stamp-actions">
+        <a href="journal.html">Add More Meals</a>
+        <button onclick="refreshStamps()">Refresh Stamps</button>
+      </div>
+
+    </div>
+
+  </main>
+
+  <div class="ticket-overlay" id="ticketOverlay">
+    <div class="ticket-detail-card">
+      <div class="detail-icon-box" id="detailIconBox"></div>
+      <h2 id="detailTitle">Ticket Badge</h2>
+      <p id="detailText">Badge detail</p>
+      <button class="close-ticket-detail" onclick="closeTicketDetail()">Close</button>
+    </div>
+  </div>
+
+  <script>
+    const JOURNAL_KEY = "dinnerJournalEntriesV2";
+
+    const stampGrid = document.getElementById("stampGrid");
+    const ticketGrid = document.getElementById("ticketGrid");
+    const stampSummary = document.getElementById("stampSummary");
+    const stampCount = document.getElementById("stampCount");
+    const specialStatus = document.getElementById("specialStatus");
+
+    const ticketOverlay = document.getElementById("ticketOverlay");
+    const detailIconBox = document.getElementById("detailIconBox");
+    const detailTitle = document.getElementById("detailTitle");
+    const detailText = document.getElementById("detailText");
+
+    renderStamps();
+
+    function getEntries() {
+      return JSON.parse(localStorage.getItem(JOURNAL_KEY)) || [];
+    }
+
+    function getSearchText(entries) {
+      return entries.map(entry => {
+        return `${entry.foodName || ""} ${entry.place || ""} ${entry.shop || ""} ${entry.note || ""}`;
+      }).join(" ").toLowerCase();
+    }
+
+    function renderStamps() {
+      const entries = getEntries();
+
+      stampGrid.innerHTML = "";
+      ticketGrid.innerHTML = "";
+
+      const places = new Set(entries.map(entry => (entry.place || "home").toLowerCase()));
+      const text = getSearchText(entries);
+
+      const tickets = [
+        {
+          name: "5 Meals Ticket",
+          icon: "coffee",
+          unlocked: entries.length >= 5,
+          status: entries.length >= 5 ? "Unlocked" : `${5 - entries.length} more meals needed`,
+          detail: "You recorded 5 meals in your Food Journal. This ticket celebrates your first food collection milestone."
+        },
+        {
+          name: "10 Meals Ticket",
+          icon: "bread",
+          unlocked: entries.length >= 10,
+          status: entries.length >= 10 ? "Unlocked" : `${10 - entries.length} more meals needed`,
+          detail: "You recorded 10 meals. Your dinner archive is becoming richer and more personal."
+        },
+        {
+          name: "Chili Ticket",
+          icon: "chili",
+          unlocked: hasAny(text, ["spicy", "chili", "mala", "hotpot", "tteokbokki"]),
+          status: hasAny(text, ["spicy", "chili", "mala", "hotpot", "tteokbokki"]) ? "Unlocked" : "Record spicy food",
+          detail: "Unlocked by recording spicy food such as tteokbokki, mala, hotpot, or chili dishes."
+        },
+        {
+          name: "Dessert Ticket",
+          icon: "cake",
+          unlocked: hasAny(text, ["dessert", "cake", "ice cream", "waffle", "sweet", "bubble tea"]),
+          status: hasAny(text, ["dessert", "cake", "ice cream", "waffle", "sweet", "bubble tea"]) ? "Unlocked" : "Record dessert",
+          detail: "Unlocked by recording dessert or sweet food in your Food Journal."
+        },
+        {
+          name: "Rice Ticket",
+          icon: "rice",
+          unlocked: hasAny(text, ["rice", "fried rice", "curry rice", "bibimbap", "chicken rice"]),
+          status: hasAny(text, ["rice", "fried rice", "curry rice", "bibimbap", "chicken rice"]) ? "Unlocked" : "Record rice dish",
+          detail: "Unlocked by recording a rice dish such as fried rice, curry rice, or chicken rice."
+        },
+        {
+          name: "Noodle Ticket",
+          icon: "noodle",
+          unlocked: hasAny(text, ["noodle", "noodles", "ramen", "udon", "pho", "laksa"]),
+          status: hasAny(text, ["noodle", "noodles", "ramen", "udon", "pho", "laksa"]) ? "Unlocked" : "Record noodles",
+          detail: "Unlocked by recording noodles such as ramen, udon, pho, or laksa."
+        },
+        {
+          name: "Explorer Ticket",
+          icon: "map",
+          unlocked: places.size >= 3,
+          status: places.size >= 3 ? "Unlocked" : `${3 - places.size} more places needed`,
+          detail: "Unlocked by recording meals from 3 different places."
+        },
+        {
+          name: "Home Ticket",
+          icon: "tea",
+          unlocked: text.includes("home"),
+          status: text.includes("home") ? "Unlocked" : "Record a home meal",
+          detail: "Unlocked by recording a meal eaten at home."
+        }
+      ];
+
+      const unlockedCount = tickets.filter(ticket => ticket.unlocked).length;
+
+      stampSummary.textContent = `${entries.length} stamps * ${entries.length} meals * ${places.size} places`;
+      stampCount.textContent = `${entries.length} meal stamps collected`;
+      specialStatus.textContent = `${unlockedCount} special ticket${unlockedCount === 1 ? "" : "s"} unlocked`;
+
+      tickets.forEach((ticket, index) => {
+        ticketGrid.appendChild(createTicket(ticket, index));
+      });
+
+      if (entries.length === 0) {
+        for (let i = 0; i < 5; i++) {
+          stampGrid.appendChild(createEmptyStamp(i));
+        }
+      } else {
+        entries.forEach((entry, index) => {
+          stampGrid.appendChild(createStamp(entry, index));
+        });
+      }
+    }
+
+    function hasAny(text, words) {
+      return words.some(word => text.includes(word));
+    }
+
+    function createTicket(ticket, index) {
+      const card = document.createElement("div");
+      card.className = ticket.unlocked ? "ticket-badge" : "ticket-badge locked";
+      card.style.animationDelay = `${index * 0.06}s`;
+
+      card.innerHTML = `
+        <div class="ticket-inner">
+          <div class="ticket-top">
+            What Should I Eat Tonight?<br>
+            Dinner Memory Ticket
+          </div>
+
+          <div>
+            <div class="ticket-name">${ticket.name}</div>
+            ${getTicketIcon(ticket.icon)}
+          </div>
+
+          <div>
+            <div class="ticket-desc">
+              Petit bonheur<br>
+              A small happy record from your dinner journey.
+            </div>
+            <div class="ticket-status">${ticket.status}</div>
+          </div>
+        </div>
+      `;
+
+      if (ticket.unlocked) {
+        card.onclick = function() {
+          openTicketDetail(ticket);
+        };
+      }
+
+      return card;
+    }
+
+    function getTicketIcon(type) {
+      const icons = {
+        coffee: `
+          <svg class="ticket-icon" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+            <g fill="none" stroke="#6f5538" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M43 67h60v28c0 20-14 34-30 34s-30-14-30-34z"/>
+              <path d="M103 76h10c14 0 14 24 0 24h-10"/>
+              <path d="M35 130h78"/>
+              <path d="M56 44c-6-10 8-14 2-24"/>
+              <path d="M78 44c-6-10 8-14 2-24"/>
+              <path d="M100 44c-6-10 8-14 2-24"/>
+            </g>
+          </svg>
+        `,
+        bread: `
+          <svg class="ticket-icon" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+            <g fill="none" stroke="#6f5538" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M28 98c22-36 64-54 104-34c-18 34-56 52-104 34z"/>
+              <path d="M58 90c8-14 18-24 30-30"/>
+              <path d="M82 100c8-14 19-24 34-31"/>
+            </g>
+          </svg>
+        `,
+        chili: `
+          <svg class="ticket-icon" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+            <g fill="none" stroke="#6f5538" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M104 38c-8 8-8 17 0 25"/>
+              <path d="M105 62c-28 0-70 30-64 58c5 24 46 3 64-18c18-21 23-40 0-40z"/>
+              <path d="M105 38c14-3 22 4 23 17"/>
+            </g>
+          </svg>
+        `,
+        cake: `
+          <svg class="ticket-icon" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+            <g fill="none" stroke="#6f5538" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M42 76c6-22 24-36 38-36s32 14 38 36z"/>
+              <path d="M36 76h88l-10 56H46z"/>
+              <path d="M55 98c10 12 20 12 30 0c10 12 20 12 30 0"/>
+              <path d="M80 32v-16"/>
+              <path d="M72 16c4-8 12-8 16 0"/>
+            </g>
+          </svg>
+        `,
+        rice: `
+          <svg class="ticket-icon" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+            <g fill="none" stroke="#6f5538" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M36 78h88l-12 48H48z"/>
+              <path d="M48 78c6-22 58-22 64 0"/>
+              <path d="M60 58c0-8 8-8 8 0"/>
+              <path d="M80 54c0-8 8-8 8 0"/>
+              <path d="M100 58c0-8 8-8 8 0"/>
+            </g>
+          </svg>
+        `,
+        noodle: `
+          <svg class="ticket-icon" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+            <g fill="none" stroke="#6f5538" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M36 86h88l-12 42H48z"/>
+              <path d="M48 86c10 16 54 16 64 0"/>
+              <path d="M50 60c10-12 20 12 30 0s20 12 30 0"/>
+              <path d="M42 44l76 24"/>
+              <path d="M46 34l76 24"/>
+            </g>
+          </svg>
+        `,
+        map: `
+          <svg class="ticket-icon" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+            <g fill="none" stroke="#6f5538" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M42 36l32 14l32-14l20 10v78l-32-14l-32 14l-20-10z"/>
+              <path d="M74 50v74"/>
+              <path d="M106 36v74"/>
+              <path d="M86 75c0 14-18 30-18 30S50 89 50 75a18 18 0 0136 0z"/>
+              <circle cx="68" cy="75" r="5"/>
+            </g>
+          </svg>
+        `,
+        tea: `
+          <svg class="ticket-icon" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+            <g fill="none" stroke="#6f5538" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M42 72h58v32c0 16-12 28-29 28s-29-12-29-28z"/>
+              <path d="M100 82h13c12 0 12 20 0 20h-13"/>
+              <path d="M36 132h78"/>
+              <path d="M52 58c14-8 28 8 42 0"/>
+              <path d="M82 44c4-12 16-12 20 0"/>
+            </g>
+          </svg>
+        `
+      };
+
+      return icons[type];
+    }
+
+    function openTicketDetail(ticket) {
+      detailIconBox.innerHTML = getTicketIcon(ticket.icon);
+      detailTitle.textContent = ticket.name;
+      detailText.textContent = ticket.detail;
+      ticketOverlay.style.display = "flex";
+    }
+
+    function closeTicketDetail() {
+      ticketOverlay.style.display = "none";
+    }
+
+    function createStamp(entry, index) {
+      const card = document.createElement("div");
+      card.className = "stamp-card";
+      card.style.animationDelay = `${index * 0.06}s`;
+
+      const dateText = formatShortDate(entry.date);
+      const placeText = (entry.place || "home").toUpperCase();
+      const foodName = entry.foodName || "Meal";
+
+      card.innerHTML = `
+        <svg class="stamp-shape" viewBox="0 0 260 260" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M130 14
+            C146 30 168 16 181 38
+            C205 36 217 58 210 78
+            C232 92 228 119 208 132
+            C227 150 218 176 194 181
+            C190 206 164 211 148 194
+            C132 217 103 214 94 190
+            C70 198 50 179 57 155
+            C32 145 30 118 50 104
+            C36 82 51 58 75 61
+            C83 36 111 34 130 14Z"
+            fill="rgba(255,255,255,0.35)"
+            stroke="#438bb9"
+            stroke-width="6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M130 32
+            C143 45 161 34 171 51
+            C190 50 199 67 194 83
+            C211 94 208 116 192 126
+            C207 140 200 161 181 165
+            C178 185 157 189 144 176
+            C131 194 108 192 101 173
+            C82 180 66 165 72 146
+            C52 138 50 116 66 105
+            C55 87 67 69 86 71
+            C93 51 115 48 130 32Z"
+            fill="none"
+            stroke="#438bb9"
+            stroke-width="3"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            opacity="0.7"
+          />
+        </svg>
+
+        <div class="stamp-content">
+          <div class="stamp-place">${placeText}</div>
+
+          <div class="stamp-photo">
+            ${
+              entry.photo
+              ? `<img src="${entry.photo}" alt="${foodName}">`
+              : "🍽️"
+            }
+          </div>
+
+          <div class="stamp-food">${foodName}</div>
+          <div class="stamp-date">${dateText}</div>
+        </div>
+      `;
+
+      return card;
+    }
+
+    function createEmptyStamp(index) {
+      const card = document.createElement("div");
+      card.className = "stamp-card empty-stamp";
+      card.style.animationDelay = `${index * 0.06}s`;
+
+      card.innerHTML = `
+        <svg class="stamp-shape" viewBox="0 0 260 260" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M130 14
+            C146 30 168 16 181 38
+            C205 36 217 58 210 78
+            C232 92 228 119 208 132
+            C227 150 218 176 194 181
+            C190 206 164 211 148 194
+            C132 217 103 214 94 190
+            C70 198 50 179 57 155
+            C32 145 30 118 50 104
+            C36 82 51 58 75 61
+            C83 36 111 34 130 14Z"
+            fill="rgba(255,255,255,0.35)"
+            stroke="#438bb9"
+            stroke-width="6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+
+        <div class="stamp-content">
+          <div class="stamp-place">LOCKED</div>
+          <div class="stamp-photo">＋</div>
+          <div class="stamp-food">Empty</div>
+          <div class="stamp-date">Add meal</div>
+        </div>
+      `;
+
+      return card;
+    }
+
+    function formatShortDate(dateString) {
+      if (!dateString) {
+        return "";
+      }
+
+      const parts = dateString.split("-");
+      const year = parts[0];
+      const month = parts[1];
+      const day = parts[2];
+
+      return `${month}.${day}.${year}`;
+    }
+
+    function refreshStamps() {
+      renderStamps();
+    }
+  </script>
+
+</body>
+</html>

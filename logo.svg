@@ -1,0 +1,23 @@
+<svg width="160" height="160" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="#8b6f4e" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- plate -->
+    <ellipse cx="80" cy="90" rx="36" ry="14"/>
+    <ellipse cx="80" cy="90" rx="24" ry="8"/>
+
+    <!-- fork -->
+    <path d="M48 58v22"/>
+    <path d="M43 54v10"/>
+    <path d="M48 52v12"/>
+    <path d="M53 54v10"/>
+    <path d="M48 80v22"/>
+
+    <!-- knife -->
+    <path d="M112 52c6 10 6 22 2 31"/>
+    <path d="M114 83v19"/>
+
+    <!-- little steam / doodle feeling -->
+    <path d="M70 52c-3-6 2-10 0-15"/>
+    <path d="M82 48c-3-6 2-10 0-15"/>
+    <path d="M94 52c-3-6 2-10 0-15"/>
+  </g>
+</svg>

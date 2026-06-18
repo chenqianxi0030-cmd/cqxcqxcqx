@@ -1,0 +1,416 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #fbf6ec;
+  color: #8b6f4e;
+  font-family: Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+
+/* ===== TOP NAVIGATION ===== */
+
+.top-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 92px;
+  padding: 0 48px;
+  background: rgba(251, 246, 236, 0.94);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(139, 111, 78, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 100;
+}
+
+.nav-logo {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-logo img {
+  width: 58px;
+  height: 58px;
+  object-fit: contain;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 48px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #8b6f4e;
+  font-family: 'Patrick Hand', cursive;
+  font-size: 28px;
+  letter-spacing: 1px;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.nav-links a:hover {
+  opacity: 0.65;
+  transform: translateY(-2px);
+}
+
+
+/* ===== HERO SCROLL EFFECT ===== */
+
+.hero-scroll {
+  height: 320vh;
+  background: linear-gradient(
+    to bottom,
+    #fbf6ec 0%,
+    #fbf6ec 38%,
+    #f3eadb 68%,
+    #efe0c8 100%
+  );
+  position: relative;
+}
+
+.hero-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  background: transparent;
+}
+
+.hero-title {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 180px;
+  letter-spacing: 10px;
+  font-weight: 900;
+  color: #8b6f4e;
+  z-index: 5;
+  white-space: nowrap;
+}
+
+.hero-subtitle {
+  position: absolute;
+  top: 63%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 22px;
+  letter-spacing: 4px;
+  color: #8b6f4e;
+  z-index: 5;
+  white-space: nowrap;
+}
+
+.transition-text {
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  transform: translate(-50%, 40px);
+  width: 82%;
+  max-width: 980px;
+  text-align: center;
+  font-family: 'Patrick Hand', cursive;
+  font-size: 72px;
+  line-height: 1.1;
+  letter-spacing: 1px;
+  color: #8b6f4e;
+  opacity: 0;
+  z-index: 6;
+}
+
+.scroll-text {
+  position: absolute;
+  bottom: 45px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Patrick Hand', cursive;
+  font-size: 22px;
+  color: #8b6f4e;
+  z-index: 10;
+  animation: bounce 1.5s infinite;
+}
+
+
+/* ===== DOODLES ===== */
+
+.doodle {
+  position: absolute;
+  width: 120px;
+  opacity: 0.9;
+  z-index: 2;
+  animation: float 4s ease-in-out infinite;
+}
+
+.doodle1 {
+  top: 18%;
+  left: 22%;
+}
+
+.doodle2 {
+  top: 18%;
+  right: 28%;
+  animation-delay: 0.5s;
+}
+
+.doodle3 {
+  bottom: 16%;
+  left: 10%;
+  animation-delay: 1s;
+}
+
+.doodle4 {
+  bottom: 20%;
+  right: 13%;
+  animation-delay: 1.5s;
+}
+
+.doodle5 {
+  bottom: 13%;
+  left: 48%;
+  animation-delay: 2s;
+}
+
+
+/* ===== DINNER BOT SECTION ===== */
+
+.chatbot-section {
+  min-height: 100vh;
+  background: linear-gradient(
+    to bottom,
+    #efe0c8 0%,
+    #ead6b8 45%,
+    #f4e7d3 75%,
+    #fffaf2 100%
+  );
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 140px 80px 80px;
+}
+
+.chatbot-wrapper {
+  width: 90%;
+  max-width: 1120px;
+  display: flex;
+  gap: 70px;
+  align-items: center;
+  justify-content: center;
+}
+
+.chatbot-text {
+  flex: 1;
+  text-align: left;
+}
+
+.chatbot-text h2 {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 86px;
+  color: #8b6f4e;
+  margin-bottom: 20px;
+}
+
+.chatbot-text p {
+  font-size: 22px;
+  line-height: 1.6;
+  color: #8b6f4e;
+}
+
+.chat-window {
+  flex: 1;
+  background: #fffaf2;
+  border: 1.6px solid #8b6f4e;
+  border-radius: 28px;
+  padding: 30px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.08);
+}
+
+#chatMessages {
+  max-height: 320px;
+  overflow-y: auto;
+  padding-bottom: 10px;
+}
+
+.message {
+  max-width: 88%;
+  padding: 14px 18px;
+  border-radius: 22px;
+  margin-bottom: 16px;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.message.bot {
+  background: #ead6b8;
+  color: #6f5538;
+}
+
+.message.user {
+  background: #8b6f4e;
+  color: white;
+  margin-left: auto;
+}
+
+.chat-input {
+  display: flex;
+  gap: 10px;
+  margin-top: 25px;
+}
+
+.chat-input input {
+  flex: 1;
+  padding: 14px 18px;
+  border-radius: 30px;
+  border: 1.5px solid #8b6f4e;
+  background: #fbf6ec;
+  color: #8b6f4e;
+}
+
+.chat-input button {
+  padding: 14px 24px;
+  border-radius: 30px;
+  border: none;
+  background: #8b6f4e;
+  color: white;
+  cursor: pointer;
+}
+
+
+/* ===== DINNER OPTIONS VIDEO SECTION ===== */
+
+.dinner-menu-section {
+  min-height: 100vh;
+  background: linear-gradient(
+    to bottom,
+    #fffaf2 0%,
+    #fbf6ec 45%,
+    #f3eadb 75%,
+    #efe0c8 100%
+  );
+  padding: 140px 80px 80px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.dinner-menu-section h2 {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 82px;
+  color: #8b6f4e;
+  margin-bottom: 8px;
+}
+
+.section-subtitle {
+  font-size: 20px;
+  margin-bottom: 35px;
+  color: #8b6f4e;
+}
+
+.interactive-video-box {
+  position: relative;
+  width: 85%;
+  max-width: 950px;
+  margin: 0 auto;
+  border-radius: 30px;
+  overflow: hidden;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+  background: black;
+}
+
+.interactive-video-box video {
+  width: 100%;
+  display: block;
+}
+
+.video-choices {
+  position: absolute;
+  inset: 0;
+  background: rgba(43, 33, 24, 0.72);
+  color: white;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  text-align: center;
+}
+
+.video-choices h3 {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 58px;
+  margin-bottom: 10px;
+}
+
+.video-choices p {
+  font-size: 20px;
+  margin-bottom: 30px;
+}
+
+.choice-buttons {
+  display: flex;
+  gap: 36px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.choice-buttons button {
+  background: transparent;
+  border: none;
+  color: white;
+  border-bottom: 2px solid white;
+  font-family: 'Patrick Hand', cursive;
+  font-size: 30px;
+  padding: 8px 4px;
+  cursor: pointer;
+}
+
+.restart-button {
+  margin: 35px auto 0;
+  padding: 10px 24px;
+  border: none;
+  border-radius: 30px;
+  background: #ead6b8;
+  color: #8b6f4e;
+  font-family: 'Patrick Hand', cursive;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+
+/* ===== ANIMATION ===== */
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotate(-5deg);
+  }
+
+  50% {
+    transform: translateY(-18px) rotate(5deg);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translate(-50%, 0);
+  }
+
+  50% {
+    transform: translate(-50%, 12px);
+  }
+}
