@@ -50,7 +50,7 @@
       </p>
 
       <p class="transition-text">
-        Should I eat noodles, rice, or what should I eat tonight...
+        Should I eat noodles or rice, or what should I eat...
       </p>
 
       <div class="scroll-text">↓ Scroll</div>
@@ -138,6 +138,86 @@
 
 
   <script src="script.js"></script>
+
+  <!-- HOME HERO SCROLL TRANSITION FIX -->
+  <script>
+    (function () {
+      const hero = document.querySelector('.hero-scroll');
+      const title = document.querySelector('.hero-title');
+      const subtitle = document.querySelector('.hero-subtitle');
+      const transitionText = document.querySelector('.transition-text');
+      const scrollText = document.querySelector('.scroll-text');
+      const doodles = document.querySelectorAll('.hero-sticky .doodle');
+
+      if (!hero || !title || !transitionText) return;
+
+      function clamp(value, min, max) {
+        return Math.min(Math.max(value, min), max);
+      }
+
+      function smoothstep(edge0, edge1, value) {
+        const x = clamp((value - edge0) / (edge1 - edge0), 0, 1);
+        return x * x * (3 - 2 * x);
+      }
+
+      function updateHeroScroll() {
+        const rect = hero.getBoundingClientRect();
+        const scrollRange = Math.max(hero.offsetHeight - window.innerHeight, 1);
+        const progress = clamp(-rect.top / scrollRange, 0, 1);
+        const isMobile = window.innerWidth <= 768;
+
+        /* DINNER title slides away first */
+        const titleFade = 1 - smoothstep(0.10, 0.32, progress);
+        const titleMove = isMobile ? 170 : 260;
+        title.style.opacity = titleFade;
+        title.style.transform = `translate(-50%, calc(-50% - ${progress * titleMove}px))`;
+
+        if (subtitle) {
+          const subtitleFade = 1 - smoothstep(0.06, 0.24, progress);
+          subtitle.style.opacity = subtitleFade;
+          subtitle.style.transform = 'translateX(-50%)';
+        }
+
+        /* Middle sentence appears slowly, then fades before the next section */
+        const textFadeIn = smoothstep(0.22, 0.38, progress);
+        const textFadeOut = 1 - smoothstep(0.70, 0.90, progress);
+        const textOpacity = textFadeIn * textFadeOut;
+        const textMove = isMobile ? 34 : 48;
+        transitionText.style.opacity = textOpacity;
+        transitionText.style.transform = `translate(-50%, ${textMove - progress * 70}px)`;
+
+        /* Doodles stay in place, only become lighter and disappear near the end */
+        const doodleFade = 1 - smoothstep(0.25, 0.90, progress);
+        const doodleOpacity = clamp(0.14 + doodleFade * 0.76, 0, 0.90);
+        const doodleLight = smoothstep(0.18, 0.86, progress);
+
+        doodles.forEach((doodle) => {
+          doodle.style.opacity = doodleOpacity;
+          doodle.style.filter = `saturate(${1 - doodleLight * 0.35}) brightness(${1 + doodleLight * 0.18})`;
+        });
+
+        if (scrollText) {
+          scrollText.style.opacity = 1 - smoothstep(0.04, 0.18, progress);
+        }
+      }
+
+      let ticking = false;
+      function requestUpdate() {
+        if (!ticking) {
+          window.requestAnimationFrame(() => {
+            updateHeroScroll();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }
+
+      window.addEventListener('scroll', requestUpdate, { passive: true });
+      window.addEventListener('resize', requestUpdate);
+      window.addEventListener('load', updateHeroScroll);
+      updateHeroScroll();
+    })();
+  </script>
 
 </body>
 </html>
