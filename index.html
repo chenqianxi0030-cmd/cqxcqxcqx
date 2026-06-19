@@ -18,7 +18,7 @@
 
     <div class="nav-logo">
       <a href="index.html">
-        <svg width="58" height="58" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-label="Dinner logo">
+        <svg width="58" height="58" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
           <g fill="none" stroke="#8b6f4e" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M28 55c6 24 58 24 64 0" />
             <path d="M24 55h72" />
@@ -45,8 +45,7 @@
 
     <div class="hero-sticky">
 
-      <!-- Noodle doodle -->
-      <svg class="doodle doodle1" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg" aria-label="noodle">
+      <svg class="doodle doodle1" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
         <g fill="none" stroke="#8b6f4e" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M30 78h80l-12 36H42z"/>
           <path d="M42 78c8 14 48 14 56 0"/>
@@ -56,8 +55,7 @@
         </g>
       </svg>
 
-      <!-- Cake doodle -->
-      <svg class="doodle doodle2" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg" aria-label="cake">
+      <svg class="doodle doodle2" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
         <g fill="none" stroke="#8b6f4e" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M38 72c4-22 22-36 32-36s28 14 32 36z"/>
           <path d="M34 72h72l-8 42H42z"/>
@@ -67,8 +65,7 @@
         </g>
       </svg>
 
-      <!-- Burger doodle -->
-      <svg class="doodle doodle3" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg" aria-label="burger">
+      <svg class="doodle doodle3" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
         <g fill="none" stroke="#8b6f4e" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M32 60c4-22 72-22 76 0z"/>
           <path d="M34 64h72"/>
@@ -81,8 +78,7 @@
         </g>
       </svg>
 
-      <!-- Drink doodle -->
-      <svg class="doodle doodle4" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg" aria-label="drink">
+      <svg class="doodle doodle4" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
         <g fill="none" stroke="#8b6f4e" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M44 34h52l-8 84H52z"/>
           <path d="M48 58h44"/>
@@ -92,8 +88,7 @@
         </g>
       </svg>
 
-      <!-- Croissant / food doodle -->
-      <svg class="doodle doodle5" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg" aria-label="food">
+      <svg class="doodle doodle5" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
         <g fill="none" stroke="#8b6f4e" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M34 78c12-28 42-42 72-22c-8 36-44 54-72 22z"/>
           <path d="M54 78c6-14 16-24 28-30"/>
@@ -159,9 +154,14 @@
 
     <div class="interactive-video-box">
 
-      <video id="dinnerVideo" controls>
-        <source src="videos/video1.mp4" type="video/mp4">
+      <video id="dinnerVideo" controls preload="metadata" playsinline>
+        <source src="./videos/video1.mp4" type="video/mp4">
+        Your browser does not support the video tag.
       </video>
+
+      <div class="video-error" id="videoError">
+        Video cannot load. Please check whether videos/video1.mp4 is uploaded to GitHub.
+      </div>
 
       <div class="video-choices" id="videoChoices">
 
@@ -171,11 +171,11 @@
 
         <div class="choice-buttons">
 
-          <button onclick="changeVideo('videos/video3.mp4')">
+          <button onclick="changeVideo('./videos/video3.mp4')">
             I want Tteokbokki
           </button>
 
-          <button onclick="changeVideo('videos/video2.mp4')">
+          <button onclick="changeVideo('./videos/video2.mp4')">
             I want egg fried rice
           </button>
 
