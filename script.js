@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const dinnerVideo = document.getElementById("dinnerVideo");
   const videoChoices = document.getElementById("videoChoices");
+  const videoError = document.getElementById("videoError");
 
   const sendBtn = document.getElementById("sendBtn");
   const userInput = document.getElementById("userInput");
@@ -101,6 +102,18 @@ document.addEventListener("DOMContentLoaded", function () {
   if (dinnerVideo && videoChoices) {
     dinnerVideo.addEventListener("ended", function () {
       videoChoices.style.display = "flex";
+    });
+
+    dinnerVideo.addEventListener("error", function () {
+      if (videoError) {
+        videoError.style.display = "block";
+      }
+    });
+
+    dinnerVideo.addEventListener("loadedmetadata", function () {
+      if (videoError) {
+        videoError.style.display = "none";
+      }
     });
   }
 
@@ -250,19 +263,45 @@ document.addEventListener("DOMContentLoaded", function () {
 function changeVideo(videoPath) {
   const dinnerVideo = document.getElementById("dinnerVideo");
   const videoChoices = document.getElementById("videoChoices");
+  const videoError = document.getElementById("videoError");
+
+  if (videoError) {
+    videoError.style.display = "none";
+  }
 
   dinnerVideo.src = videoPath;
   dinnerVideo.load();
-  dinnerVideo.play();
+
+  const playPromise = dinnerVideo.play();
+
+  if (playPromise !== undefined) {
+    playPromise.catch(function () {
+      console.log("Video autoplay was blocked. Please click play.");
+    });
+  }
+
   videoChoices.style.display = "none";
 }
 
 function restartVideo() {
   const dinnerVideo = document.getElementById("dinnerVideo");
   const videoChoices = document.getElementById("videoChoices");
+  const videoError = document.getElementById("videoError");
 
-  dinnerVideo.src = "videos/video1.mp4";
+  if (videoError) {
+    videoError.style.display = "none";
+  }
+
+  dinnerVideo.src = "./videos/video1.mp4";
   dinnerVideo.load();
-  dinnerVideo.play();
+
+  const playPromise = dinnerVideo.play();
+
+  if (playPromise !== undefined) {
+    playPromise.catch(function () {
+      console.log("Video autoplay was blocked. Please click play.");
+    });
+  }
+
   videoChoices.style.display = "none";
 }
