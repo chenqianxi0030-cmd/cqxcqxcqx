@@ -733,3 +733,23 @@ body {
     font-size: 46px;
   }
 }
+.transition-text {
+  z-index: 50 !important;
+  color: #8b6f4e !important;
+}
+
+@media screen and (max-width: 768px) {
+  .transition-text {
+    display: block !important;
+    font-size: 32px !important;
+    line-height: 1.15 !important;
+    max-width: 360px !important;
+    width: 86% !important;
+    color: #8b6f4e !important;
+    z-index: 50 !important;
+  }
+
+  .hero-title {
+    opacity: 1;
+  }
+}
