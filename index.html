@@ -14,11 +14,12 @@
 
 <body>
 
-  <!-- TOP NAVIGATION -->
   <header class="top-nav">
 
     <div class="nav-logo">
-      <img src="logo.svg" alt="Dinner logo">
+      <a href="index.html">
+        <img src="images/logo.svg" alt="Dinner logo">
+      </a>
     </div>
 
     <nav class="nav-links">
@@ -31,17 +32,15 @@
 
   </header>
 
-
-  <!-- HOME / HERO SCROLL AREA -->
   <section class="hero-scroll" id="home">
 
     <div class="hero-sticky">
 
-      <img src="noodle.svg" class="doodle doodle1" alt="noodle">
-      <img src="sushi.svg" class="doodle doodle2" alt="sushi">
-      <img src="burger.svg" class="doodle doodle3" alt="burger">
-      <img src="drink.svg" class="doodle doodle4" alt="drink">
-      <img src="pizza.svg" class="doodle doodle5" alt="pizza">
+      <img src="images/noodle.svg" class="doodle doodle1" alt="noodle">
+      <img src="images/sushi.svg" class="doodle doodle2" alt="food">
+      <img src="images/burger.svg" class="doodle doodle3" alt="burger">
+      <img src="images/drink.svg" class="doodle doodle4" alt="drink">
+      <img src="images/pizza.svg" class="doodle doodle5" alt="food">
 
       <h1 class="hero-title">DINNER</h1>
 
@@ -59,8 +58,6 @@
 
   </section>
 
-
-  <!-- DINNER FINDER / DINNER BOT SECTION -->
   <section class="chatbot-section" id="dinnerbot">
 
     <div class="chatbot-wrapper">
@@ -92,8 +89,6 @@
 
   </section>
 
-
-  <!-- DINNER OPTIONS / INTERACTIVE VIDEO SECTION -->
   <section class="dinner-menu-section" id="dinner-options">
 
     <h2>Dinner Options</h2>
@@ -105,7 +100,7 @@
     <div class="interactive-video-box">
 
       <video id="dinnerVideo" controls>
-        <source src="video1.mp4" type="video/mp4">
+        <source src="videos/video1.mp4" type="video/mp4">
       </video>
 
       <div class="video-choices" id="videoChoices">
@@ -116,11 +111,11 @@
 
         <div class="choice-buttons">
 
-          <button onclick="changeVideo('video3.mp4')">
+          <button onclick="changeVideo('videos/video3.mp4')">
             I want Tteokbokki
           </button>
 
-          <button onclick="changeVideo('video2.mp4')">
+          <button onclick="changeVideo('videos/video2.mp4')">
             I want egg fried rice
           </button>
 
@@ -135,7 +130,6 @@
     </button>
 
   </section>
-
 
   <script src="script.js"></script>
 
