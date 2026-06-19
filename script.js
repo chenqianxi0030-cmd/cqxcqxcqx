@@ -16,65 +16,102 @@ document.addEventListener("DOMContentLoaded", function () {
 
   /* ===== HERO SCROLL ANIMATION ===== */
 
-  window.addEventListener("scroll", function () {
-    if (!heroScroll || !heroTitle || !heroSubtitle || !transitionText) {
+  function clamp(value, min, max) {
+    return Math.min(Math.max(value, min), max);
+  }
+
+  function runHeroAnimation() {
+    if (!heroScroll || !heroTitle || !transitionText) {
       return;
     }
 
     const rect = heroScroll.getBoundingClientRect();
-    const totalScroll = heroScroll.offsetHeight - window.innerHeight;
+    const totalScroll = Math.max(heroScroll.offsetHeight - window.innerHeight, 1);
 
     let progress = -rect.top / totalScroll;
+    progress = clamp(progress, 0, 1);
 
-    if (progress < 0) progress = 0;
-    if (progress > 1) progress = 1;
+    const isMobile = window.innerWidth <= 768;
 
-    const titleMove = progress * 470;
-    const titleOpacity = 1 - progress * 1.25;
+    const titleMove = isMobile ? progress * 290 : progress * 470;
+    const titleOpacity = clamp(1 - progress * 1.25, 0, 1);
 
     heroTitle.style.transform = `translate(-50%, calc(-50% + ${titleMove}px))`;
     heroTitle.style.opacity = titleOpacity;
 
-    heroSubtitle.style.opacity = 1 - progress * 3;
+    if (heroSubtitle) {
+      if (isMobile) {
+        heroSubtitle.style.opacity = 0;
+      } else {
+        heroSubtitle.style.opacity = clamp(1 - progress * 3, 0, 1);
+      }
+    }
 
     doodles.forEach(function (doodle) {
-      let doodleOpacity = 0.9 - progress * 1.35;
-
-      if (doodleOpacity < 0) {
-        doodleOpacity = 0;
-      }
-
+      const doodleOpacity = clamp(0.9 - progress * 1.15, 0, 0.9);
       doodle.style.opacity = doodleOpacity;
     });
 
     if (scrollText) {
-      scrollText.style.opacity = 1 - progress * 4;
+      scrollText.style.opacity = clamp(1 - progress * 4, 0, 1);
     }
 
-    if (progress < 0.16) {
-      transitionText.style.opacity = 0;
-      transitionText.style.transform = "translate(-50%, 40px)";
+    if (isMobile) {
+      if (progress < 0.16) {
+        transitionText.style.opacity = 0;
+        transitionText.style.transform = "translate(-50%, 55px)";
+      }
+
+      else if (progress >= 0.16 && progress < 0.32) {
+        const appearProgress = (progress - 0.16) / 0.16;
+
+        transitionText.style.opacity = appearProgress;
+        transitionText.style.transform = "translate(-50%, -50%)";
+      }
+
+      else if (progress >= 0.32 && progress < 0.96) {
+        transitionText.style.opacity = 1;
+        transitionText.style.transform = "translate(-50%, -50%)";
+      }
+
+      else {
+        const disappearProgress = (progress - 0.96) / 0.04;
+
+        transitionText.style.opacity = clamp(1 - disappearProgress, 0, 1);
+        transitionText.style.transform = `translate(-50%, calc(-50% + ${disappearProgress * 70}px))`;
+      }
     }
 
-    else if (progress >= 0.16 && progress < 0.34) {
-      const appearProgress = (progress - 0.16) / 0.18;
+    else {
+      if (progress < 0.14) {
+        transitionText.style.opacity = 0;
+        transitionText.style.transform = "translate(-50%, 50px)";
+      }
 
-      transitionText.style.opacity = appearProgress;
-      transitionText.style.transform = "translate(-50%, -50%)";
+      else if (progress >= 0.14 && progress < 0.28) {
+        const appearProgress = (progress - 0.14) / 0.14;
+
+        transitionText.style.opacity = appearProgress;
+        transitionText.style.transform = "translate(-50%, -50%)";
+      }
+
+      else if (progress >= 0.28 && progress < 0.96) {
+        transitionText.style.opacity = 1;
+        transitionText.style.transform = "translate(-50%, -50%)";
+      }
+
+      else {
+        const disappearProgress = (progress - 0.96) / 0.04;
+
+        transitionText.style.opacity = clamp(1 - disappearProgress, 0, 1);
+        transitionText.style.transform = `translate(-50%, calc(-50% + ${disappearProgress * 90}px))`;
+      }
     }
+  }
 
-    else if (progress >= 0.34 && progress < 0.80) {
-      transitionText.style.opacity = 1;
-      transitionText.style.transform = "translate(-50%, -50%)";
-    }
-
-    else if (progress >= 0.80 && progress <= 1) {
-      const disappearProgress = (progress - 0.80) / 0.20;
-
-      transitionText.style.opacity = 1 - disappearProgress;
-      transitionText.style.transform = `translate(-50%, calc(-50% + ${disappearProgress * 130}px))`;
-    }
-  });
+  window.addEventListener("scroll", runHeroAnimation);
+  window.addEventListener("resize", runHeroAnimation);
+  runHeroAnimation();
 
 
   /* ===== INTERACTIVE VIDEO ===== */
