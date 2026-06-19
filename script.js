@@ -13,109 +13,96 @@ document.addEventListener("DOMContentLoaded", function () {
   const userInput = document.getElementById("userInput");
   const chatMessages = document.getElementById("chatMessages");
 
-
-  /* ===== HERO SCROLL ANIMATION - OLD LOOK RESTORED ===== */
-
-  function clamp(value, min, max) {
-    return Math.min(Math.max(value, min), max);
-  }
-
-  function runHeroAnimation() {
-    if (!heroScroll || !heroTitle || !transitionText) {
+  function handleHeroScroll() {
+    if (!heroScroll || !heroTitle || !heroSubtitle || !transitionText) {
       return;
     }
 
     const rect = heroScroll.getBoundingClientRect();
-    const totalScroll = Math.max(heroScroll.offsetHeight - window.innerHeight, 1);
+    const totalScroll = heroScroll.offsetHeight - window.innerHeight;
 
     let progress = -rect.top / totalScroll;
-    progress = clamp(progress, 0, 1);
 
-    const isMobile = window.innerWidth <= 768;
+    if (progress < 0) {
+      progress = 0;
+    }
 
-    /*
-      旧版效果：
-      DINNER 不会马上消失
-      往下滑时 Should I eat... 出现在上面
-      DINNER 会变淡并往下移动
-    */
+    if (progress > 1) {
+      progress = 1;
+    }
 
-    const titleMove = isMobile ? progress * 260 : progress * 360;
-    const titleOpacity = clamp(1 - progress * 0.85, 0.18, 1);
+    const titleMove = progress * 520;
+    let titleOpacity = 1 - progress * 1.45;
+
+    if (titleOpacity < 0) {
+      titleOpacity = 0;
+    }
 
     heroTitle.style.transform = `translate(-50%, calc(-50% + ${titleMove}px))`;
     heroTitle.style.opacity = titleOpacity;
 
-    if (heroSubtitle) {
-      if (isMobile) {
-        heroSubtitle.style.opacity = 0;
-      } else {
-        heroSubtitle.style.opacity = clamp(1 - progress * 2.5, 0, 1);
-      }
+    let subtitleOpacity = 1 - progress * 3.2;
+
+    if (subtitleOpacity < 0) {
+      subtitleOpacity = 0;
     }
 
+    heroSubtitle.style.opacity = subtitleOpacity;
+
     doodles.forEach(function (doodle) {
-      const doodleOpacity = clamp(0.9 - progress * 0.75, 0.18, 0.9);
+      let doodleOpacity = 0.9 - progress * 1.25;
+
+      if (doodleOpacity < 0) {
+        doodleOpacity = 0;
+      }
+
       doodle.style.opacity = doodleOpacity;
     });
 
     if (scrollText) {
-      scrollText.style.opacity = clamp(1 - progress * 4, 0, 1);
+      let scrollOpacity = 1 - progress * 5;
+
+      if (scrollOpacity < 0) {
+        scrollOpacity = 0;
+      }
+
+      scrollText.style.opacity = scrollOpacity;
     }
 
-    /*
-      Should I eat... 出现的位置
-      这里调成你截图里的样子：在 DINNER 上面
-    */
-
-    if (progress < 0.12) {
+    if (progress < 0.15) {
       transitionText.style.opacity = 0;
-      transitionText.style.transform = "translate(-50%, 20px)";
+      transitionText.style.transform = "translate(-50%, 40px)";
     }
 
-    else if (progress >= 0.12 && progress < 0.28) {
-      const appearProgress = (progress - 0.12) / 0.16;
+    else if (progress >= 0.15 && progress < 0.28) {
+      const appearProgress = (progress - 0.15) / 0.13;
 
       transitionText.style.opacity = appearProgress;
-      transitionText.style.transform = "translate(-50%, -130px)";
+      transitionText.style.transform = `translate(-50%, ${40 - appearProgress * 90}px)`;
     }
 
-    else if (progress >= 0.28 && progress < 0.86) {
+    else if (progress >= 0.28 && progress < 0.76) {
       transitionText.style.opacity = 1;
-      transitionText.style.transform = "translate(-50%, -130px)";
+      transitionText.style.transform = "translate(-50%, -50%)";
     }
 
     else {
-      const disappearProgress = (progress - 0.86) / 0.14;
+      const disappearProgress = (progress - 0.76) / 0.24;
 
-      transitionText.style.opacity = clamp(1 - disappearProgress, 0, 1);
-      transitionText.style.transform = `translate(-50%, calc(-130px + ${disappearProgress * 90}px))`;
+      transitionText.style.opacity = 1 - disappearProgress;
+      transitionText.style.transform = `translate(-50%, calc(-50% + ${disappearProgress * 160}px))`;
     }
   }
 
-  window.addEventListener("scroll", runHeroAnimation);
-  window.addEventListener("resize", runHeroAnimation);
-  runHeroAnimation();
-
-
-  /* ===== INTERACTIVE VIDEO ===== */
+  window.addEventListener("scroll", handleHeroScroll);
+  window.addEventListener("resize", handleHeroScroll);
+  handleHeroScroll();
 
   if (dinnerVideo && videoChoices) {
-    videoChoices.style.display = "none";
-
     dinnerVideo.addEventListener("ended", function () {
-      const currentVideoName = dinnerVideo.currentSrc.split("/").pop();
-
-      if (currentVideoName === "video1.mp4") {
-        videoChoices.style.display = "flex";
-      } else {
-        videoChoices.style.display = "none";
-      }
+      videoChoices.style.display = "flex";
     });
   }
-
-
-  /* ===== DINNERBOT CHATBOT ===== */
 
   if (sendBtn && userInput && chatMessages) {
     sendBtn.addEventListener("click", sendDinnerMessage);
@@ -260,55 +247,22 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-
-/* ===== VIDEO BUTTON FUNCTIONS ===== */
-
-function playDinnerVideo(videoPath) {
+function changeVideo(videoPath) {
   const dinnerVideo = document.getElementById("dinnerVideo");
   const videoChoices = document.getElementById("videoChoices");
 
-  if (!dinnerVideo) {
-    return;
-  }
-
-  dinnerVideo.pause();
-
-  const source = dinnerVideo.querySelector("source");
-
-  if (source) {
-    source.src = videoPath;
-    dinnerVideo.removeAttribute("src");
-  } else {
-    dinnerVideo.src = videoPath;
-  }
-
+  dinnerVideo.src = videoPath;
   dinnerVideo.load();
-
-  dinnerVideo.addEventListener(
-    "loadedmetadata",
-    function () {
-      dinnerVideo.currentTime = 0;
-
-      const playPromise = dinnerVideo.play();
-
-      if (playPromise !== undefined) {
-        playPromise.catch(function () {
-          console.log("Autoplay was blocked. Please press play manually.");
-        });
-      }
-    },
-    { once: true }
-  );
-
-  if (videoChoices) {
-    videoChoices.style.display = "none";
-  }
-}
-
-function changeVideo(videoPath) {
-  playDinnerVideo(videoPath);
+  dinnerVideo.play();
+  videoChoices.style.display = "none";
 }
 
 function restartVideo() {
-  playDinnerVideo("video1.mp4");
+  const dinnerVideo = document.getElementById("dinnerVideo");
+  const videoChoices = document.getElementById("videoChoices");
+
+  dinnerVideo.src = "videos/video1.mp4";
+  dinnerVideo.load();
+  dinnerVideo.play();
+  videoChoices.style.display = "none";
 }
