@@ -41,13 +41,10 @@ body {
   justify-content: center;
 }
 
-.nav-logo a {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.nav-logo svg {
+.nav-logo img {
+  width: 58px;
+  height: 58px;
+  object-fit: contain;
   animation: logoFloat 3.2s ease-in-out infinite;
 }
 
@@ -95,7 +92,7 @@ body {
   background: transparent;
 }
 
-/* ===== HERO TITLE ===== */
+/* DINNER TITLE */
 
 .hero-title {
   position: absolute;
@@ -123,6 +120,8 @@ body {
   white-space: nowrap;
   will-change: opacity;
 }
+
+/* IMPORTANT TRANSITION TEXT */
 
 .transition-text {
   position: absolute;
@@ -155,12 +154,11 @@ body {
   animation: bounce 1.5s infinite;
 }
 
-/* ===== DOODLES ===== */
+/* ===== FLOATING FOOD DOODLES ===== */
 
 .doodle {
   position: absolute;
   width: 120px;
-  height: 120px;
   opacity: 0.9;
   z-index: 2;
   animation: doodleFloat 4s ease-in-out infinite;
@@ -197,7 +195,7 @@ body {
   animation-delay: 2s;
 }
 
-/* ===== CHATBOT SECTION ===== */
+/* ===== DINNER BOT ===== */
 
 .chatbot-section {
   min-height: 100vh;
@@ -344,17 +342,6 @@ body {
 .interactive-video-box video {
   width: 100%;
   display: block;
-  background: black;
-}
-
-.video-error {
-  display: none;
-  padding: 18px;
-  background: #ead6b8;
-  color: #6f5538;
-  font-family: 'Patrick Hand', cursive;
-  font-size: 24px;
-  text-align: center;
 }
 
 .video-choices {
@@ -482,7 +469,6 @@ body {
 
   .doodle {
     width: 78px;
-    height: 78px;
   }
 
   .chatbot-wrapper {
