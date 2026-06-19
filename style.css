@@ -753,3 +753,484 @@ body {
     opacity: 1;
   }
 }
+/* =====================================================
+   FINAL HOME HERO FIX
+   Desktop restored + mobile vertical fixed
+   Paste this at the VERY BOTTOM of style.css
+   ===================================================== */
+
+/* ---------- DESKTOP: restore original video feeling ---------- */
+@media screen and (min-width: 769px) {
+
+  .hero-scroll {
+    height: 340vh !important;
+    background: linear-gradient(
+      to bottom,
+      #fbf6ec 0%,
+      #fbf6ec 40%,
+      #f3eadb 72%,
+      #efe0c8 100%
+    ) !important;
+    position: relative !important;
+    overflow: visible !important;
+  }
+
+  .hero-sticky {
+    position: sticky !important;
+    top: 0 !important;
+    height: 100vh !important;
+    width: 100% !important;
+    overflow: hidden !important;
+    background: transparent !important;
+  }
+
+  .hero-title {
+    position: absolute !important;
+    top: 45% !important;
+    left: 50% !important;
+    font-size: 180px !important;
+    letter-spacing: 10px !important;
+    font-weight: 900 !important;
+    color: #8b6f4e !important;
+    z-index: 5 !important;
+    white-space: nowrap !important;
+  }
+
+  .hero-subtitle {
+    position: absolute !important;
+    top: 63% !important;
+    left: 50% !important;
+    font-size: 22px !important;
+    letter-spacing: 4px !important;
+    color: #8b6f4e !important;
+    z-index: 5 !important;
+    white-space: nowrap !important;
+  }
+
+  .transition-text {
+    position: absolute !important;
+    top: 40% !important;
+    left: 50% !important;
+    width: 82% !important;
+    max-width: 980px !important;
+    text-align: center !important;
+    font-family: 'Patrick Hand', cursive !important;
+    font-size: 72px !important;
+    line-height: 1.1 !important;
+    letter-spacing: 1px !important;
+    color: #8b6f4e !important;
+    opacity: 0;
+    z-index: 6 !important;
+  }
+
+  .doodle {
+    width: 120px !important;
+    opacity: 0.9;
+  }
+
+  .doodle1 {
+    top: 18% !important;
+    left: 22% !important;
+  }
+
+  .doodle2 {
+    top: 18% !important;
+    right: 28% !important;
+    left: auto !important;
+  }
+
+  .doodle3 {
+    bottom: 16% !important;
+    left: 10% !important;
+    top: auto !important;
+  }
+
+  .doodle4 {
+    bottom: 20% !important;
+    right: 13% !important;
+    left: auto !important;
+    top: auto !important;
+  }
+
+  .doodle5 {
+    bottom: 13% !important;
+    left: 48% !important;
+    top: auto !important;
+  }
+}
+
+
+/* ---------- MOBILE: vertical version ---------- */
+@media screen and (max-width: 768px) {
+
+  .hero-scroll {
+    height: 460vh !important;
+    background: linear-gradient(
+      to bottom,
+      #fbf6ec 0%,
+      #fbf6ec 44%,
+      #f6eedf 74%,
+      #efe0c8 100%
+    ) !important;
+    position: relative !important;
+    overflow: visible !important;
+  }
+
+  .hero-sticky {
+    position: sticky !important;
+    top: 0 !important;
+    height: 100svh !important;
+    min-height: 720px !important;
+    width: 100% !important;
+    overflow: hidden !important;
+    background: transparent !important;
+  }
+
+  .hero-title {
+    position: absolute !important;
+    top: 45% !important;
+    left: 50% !important;
+    font-size: clamp(86px, 27vw, 118px) !important;
+    letter-spacing: 4px !important;
+    font-weight: 900 !important;
+    color: #8b6f4e !important;
+    white-space: nowrap !important;
+    z-index: 5 !important;
+  }
+
+  .hero-subtitle {
+    position: absolute !important;
+    top: 59% !important;
+    left: 50% !important;
+    width: 88% !important;
+    max-width: 360px !important;
+    font-size: 18px !important;
+    letter-spacing: 2px !important;
+    line-height: 1.25 !important;
+    text-align: center !important;
+    white-space: normal !important;
+    color: #8b6f4e !important;
+    z-index: 5 !important;
+  }
+
+  .transition-text {
+    position: absolute !important;
+    top: 38% !important;
+    left: 50% !important;
+    width: 86% !important;
+    max-width: 360px !important;
+    font-family: 'Patrick Hand', cursive !important;
+    font-size: clamp(30px, 8vw, 42px) !important;
+    line-height: 1.08 !important;
+    letter-spacing: 0.5px !important;
+    text-align: center !important;
+    color: #8b6f4e !important;
+    opacity: 0;
+    z-index: 6 !important;
+  }
+
+  .scroll-text {
+    bottom: 36px !important;
+    font-size: 22px !important;
+  }
+
+  .doodle {
+    width: clamp(52px, 16vw, 74px) !important;
+    opacity: 0.86;
+  }
+
+  .doodle1 {
+    top: 21% !important;
+    left: 14% !important;
+  }
+
+  .doodle2 {
+    top: 21% !important;
+    right: 16% !important;
+    left: auto !important;
+  }
+
+  .doodle3 {
+    top: 61% !important;
+    left: 20% !important;
+    bottom: auto !important;
+  }
+
+  .doodle4 {
+    top: 60% !important;
+    right: 17% !important;
+    left: auto !important;
+    bottom: auto !important;
+  }
+
+  .doodle5 {
+    top: 70% !important;
+    left: 48% !important;
+    bottom: auto !important;
+  }
+}
+
+@media screen and (max-width: 430px) {
+
+  .hero-scroll {
+    height: 480vh !important;
+  }
+
+  .hero-title {
+    font-size: clamp(82px, 28vw, 112px) !important;
+  }
+
+  .transition-text {
+    font-size: clamp(30px, 8.6vw, 38px) !important;
+  }
+}
+/* =====================================================
+   HOME HERO SCROLL TRANSITION FIX
+   Put this block at the VERY BOTTOM of style.css
+   ===================================================== */
+
+.hero-sticky .doodle,
+.hero-title,
+.hero-subtitle,
+.transition-text,
+.scroll-text {
+  will-change: opacity, transform, filter;
+}
+
+.hero-sticky .doodle {
+  animation: none !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+.transition-text {
+  display: block !important;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 50 !important;
+  color: #8b6f4e !important;
+}
+
+.hero-scroll {
+  position: relative !important;
+  overflow: visible !important;
+}
+
+.hero-sticky {
+  position: sticky !important;
+  top: 0 !important;
+  overflow: hidden !important;
+  background: transparent !important;
+}
+
+/* ---------- DESKTOP ---------- */
+@media screen and (min-width: 769px) {
+  .hero-scroll {
+    height: 360vh !important;
+    background: linear-gradient(
+      to bottom,
+      #fbf6ec 0%,
+      #fbf6ec 38%,
+      #f5ecdd 68%,
+      #ead6b8 100%
+    ) !important;
+  }
+
+  .hero-sticky {
+    height: 100vh !important;
+  }
+
+  .hero-title {
+    position: absolute !important;
+    top: 45% !important;
+    left: 50% !important;
+    font-size: 180px !important;
+    letter-spacing: 10px !important;
+    font-weight: 900 !important;
+    color: #8b6f4e !important;
+    white-space: nowrap !important;
+    z-index: 8 !important;
+  }
+
+  .hero-subtitle {
+    position: absolute !important;
+    top: 63% !important;
+    left: 50% !important;
+    font-size: 22px !important;
+    letter-spacing: 4px !important;
+    color: #8b6f4e !important;
+    white-space: nowrap !important;
+    z-index: 8 !important;
+  }
+
+  .transition-text {
+    position: absolute !important;
+    top: 47% !important;
+    left: 50% !important;
+    width: 82% !important;
+    max-width: 1050px !important;
+    text-align: center !important;
+    font-family: 'Patrick Hand', cursive !important;
+    font-size: 72px !important;
+    line-height: 1.08 !important;
+    letter-spacing: 1px !important;
+    color: #8b6f4e !important;
+    z-index: 18 !important;
+  }
+
+  .hero-sticky .doodle {
+    opacity: 0.9;
+    z-index: 3 !important;
+  }
+
+  .doodle {
+    width: 120px !important;
+  }
+
+  .doodle1 {
+    top: 18% !important;
+    left: 22% !important;
+  }
+
+  .doodle2 {
+    top: 18% !important;
+    right: 28% !important;
+    left: auto !important;
+  }
+
+  .doodle3 {
+    bottom: 16% !important;
+    left: 10% !important;
+    top: auto !important;
+  }
+
+  .doodle4 {
+    bottom: 20% !important;
+    right: 13% !important;
+    left: auto !important;
+    top: auto !important;
+  }
+
+  .doodle5 {
+    bottom: 13% !important;
+    left: 48% !important;
+    top: auto !important;
+  }
+}
+
+/* ---------- MOBILE ---------- */
+@media screen and (max-width: 768px) {
+  .hero-scroll {
+    height: 360vh !important;
+    background: linear-gradient(
+      to bottom,
+      #fbf6ec 0%,
+      #fbf6ec 38%,
+      #f5ecdd 70%,
+      #ead6b8 100%
+    ) !important;
+  }
+
+  .hero-sticky {
+    height: 100svh !important;
+    min-height: 640px !important;
+  }
+
+  .hero-title {
+    position: absolute !important;
+    top: 45% !important;
+    left: 50% !important;
+    font-size: clamp(82px, 25vw, 112px) !important;
+    letter-spacing: 4px !important;
+    font-weight: 900 !important;
+    color: #8b6f4e !important;
+    white-space: nowrap !important;
+    z-index: 8 !important;
+  }
+
+  .hero-subtitle {
+    display: block !important;
+    position: absolute !important;
+    top: 59% !important;
+    left: 50% !important;
+    width: 88% !important;
+    max-width: 360px !important;
+    font-size: 18px !important;
+    letter-spacing: 2px !important;
+    line-height: 1.2 !important;
+    text-align: center !important;
+    white-space: normal !important;
+    color: #8b6f4e !important;
+    z-index: 8 !important;
+  }
+
+  .transition-text {
+    position: absolute !important;
+    top: 43% !important;
+    left: 50% !important;
+    width: 86% !important;
+    max-width: 360px !important;
+    font-family: 'Patrick Hand', cursive !important;
+    font-size: clamp(30px, 8vw, 40px) !important;
+    line-height: 1.08 !important;
+    letter-spacing: 0.5px !important;
+    text-align: center !important;
+    color: #8b6f4e !important;
+    z-index: 18 !important;
+  }
+
+  .scroll-text {
+    bottom: 38px !important;
+  }
+
+  .hero-sticky .doodle {
+    width: clamp(52px, 16vw, 74px) !important;
+    max-width: 74px !important;
+    opacity: 0.88;
+    z-index: 3 !important;
+  }
+
+  .doodle1 {
+    top: 21% !important;
+    left: 14% !important;
+  }
+
+  .doodle2 {
+    top: 21% !important;
+    right: 16% !important;
+    left: auto !important;
+  }
+
+  .doodle3 {
+    top: 61% !important;
+    left: 20% !important;
+    bottom: auto !important;
+  }
+
+  .doodle4 {
+    top: 60% !important;
+    right: 17% !important;
+    left: auto !important;
+    bottom: auto !important;
+  }
+
+  .doodle5 {
+    top: 70% !important;
+    left: 48% !important;
+    bottom: auto !important;
+  }
+}
+
+@media screen and (max-width: 430px) {
+  .hero-scroll {
+    height: 380vh !important;
+  }
+
+  .hero-title {
+    font-size: clamp(76px, 27vw, 108px) !important;
+  }
+
+  .transition-text {
+    font-size: clamp(28px, 8.4vw, 38px) !important;
+  }
+}
