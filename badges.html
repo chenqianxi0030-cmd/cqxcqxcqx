@@ -12,6 +12,17 @@
   <link rel="stylesheet" href="style.css">
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
     .stamp-page {
       min-height: 100vh;
       padding-top: 120px;
@@ -23,6 +34,7 @@
         #ead6b8 100%
       );
       color: #6f5538;
+      overflow-x: hidden;
     }
 
     .stamp-container {
@@ -37,6 +49,7 @@
       font-size: 90px;
       color: #4b2f2f;
       margin-bottom: 6px;
+      line-height: 1;
     }
 
     .stamp-header p {
@@ -73,12 +86,14 @@
       font-size: 58px;
       color: #4b2f2f;
       margin-bottom: 10px;
+      line-height: 1;
     }
 
     .special-section p {
       color: #8b6f4e;
       font-size: 19px;
       margin-bottom: 32px;
+      line-height: 1.35;
     }
 
     .ticket-grid {
@@ -202,6 +217,7 @@
       font-family: 'Patrick Hand', cursive;
       font-size: 18px;
       color: #8b6f4e;
+      line-height: 1.05;
     }
 
     .meal-section-title {
@@ -209,6 +225,7 @@
       font-size: 58px;
       color: #4b2f2f;
       margin: 26px 0 22px;
+      line-height: 1;
     }
 
     .stamp-grid {
@@ -370,6 +387,7 @@
       font-size: 52px;
       color: #4b2f2f;
       margin-bottom: 12px;
+      line-height: 1;
     }
 
     .ticket-detail-card p {
@@ -453,14 +471,252 @@
       }
     }
 
-    @media (max-width: 720px) {
-      .ticket-grid,
-      .stamp-grid {
-        grid-template-columns: 1fr;
+    @media (max-width: 620px) {
+      .stamp-page {
+        padding-top: 105px;
+        padding-bottom: 70px;
+      }
+
+      .stamp-container {
+        width: calc(100% - 22px);
+        max-width: 430px;
       }
 
       .stamp-header h1 {
-        font-size: 66px;
+        font-size: 50px;
+        line-height: 0.95;
+        margin-bottom: 10px;
+      }
+
+      .stamp-header p {
+        font-size: 16px;
+        line-height: 1.25;
+        margin-bottom: 18px;
+      }
+
+      .stamp-stats {
+        font-size: 18px;
+        gap: 10px;
+        margin-bottom: 32px;
+      }
+
+      .stamp-stats span {
+        padding: 8px 13px;
+      }
+
+      .special-section {
+        margin-bottom: 42px;
+      }
+
+      .special-section h2 {
+        font-size: 38px;
+        line-height: 1;
+        max-width: 330px;
+        margin: 0 auto 10px;
+      }
+
+      .special-section p {
+        font-size: 15px;
+        line-height: 1.25;
+        max-width: 320px;
+        margin: 0 auto 24px;
+      }
+
+      .ticket-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px 12px;
+        align-items: start;
+      }
+
+      .ticket-badge {
+        width: 150px;
+        min-height: 252px;
+        padding: 12px 10px;
+        border-width: 2px;
+        box-shadow: 0 8px 20px rgba(75,47,47,0.12);
+      }
+
+      .ticket-badge:hover {
+        transform: none;
+      }
+
+      .ticket-badge::before,
+      .ticket-badge::after {
+        width: 26px;
+        height: 26px;
+        border-width: 1.5px;
+      }
+
+      .ticket-badge::before {
+        top: -15px;
+      }
+
+      .ticket-badge::after {
+        bottom: -15px;
+      }
+
+      .ticket-inner {
+        min-height: 226px;
+        padding: 8px 7px;
+        border-width: 1.6px;
+      }
+
+      .ticket-top {
+        font-size: 11px;
+        line-height: 1.05;
+        padding-bottom: 6px;
+        letter-spacing: 0.3px;
+      }
+
+      .ticket-name {
+        font-size: 19px;
+        line-height: 0.95;
+        margin: 6px 0 2px;
+      }
+
+      .ticket-icon {
+        width: 68px;
+        height: 68px;
+        margin: 4px 0;
+      }
+
+      .ticket-desc {
+        font-size: 9.5px;
+        line-height: 1.15;
+        padding-top: 6px;
+      }
+
+      .ticket-status {
+        font-size: 12px;
+        margin-top: 5px;
+      }
+
+      .meal-section-title {
+        font-size: 38px;
+        margin: 18px 0 18px;
+      }
+
+      .stamp-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px 12px;
+        margin-top: 20px;
+      }
+
+      .stamp-card {
+        width: 160px;
+        height: 160px;
+      }
+
+      .stamp-shape {
+        width: 154px;
+        height: 154px;
+      }
+
+      .stamp-content {
+        width: 112px;
+        height: 112px;
+      }
+
+      .stamp-place {
+        font-size: 17px;
+        max-width: 98px;
+        letter-spacing: 1px;
+        margin-bottom: 5px;
+      }
+
+      .stamp-photo {
+        width: 58px;
+        height: 58px;
+        border-radius: 17px;
+        border-width: 4px;
+        font-size: 28px;
+      }
+
+      .stamp-food {
+        font-size: 13px;
+        max-width: 100px;
+        margin-top: 4px;
+      }
+
+      .stamp-date {
+        font-size: 12px;
+        letter-spacing: 0.5px;
+        margin-top: 1px;
+      }
+
+      .stamp-actions {
+        margin-top: 34px;
+        gap: 12px;
+      }
+
+      .stamp-actions a,
+      .stamp-actions button {
+        width: 100%;
+        max-width: 290px;
+        font-size: 22px;
+        padding: 11px 20px;
+      }
+
+      .ticket-overlay {
+        padding: 18px;
+      }
+
+      .ticket-detail-card {
+        padding: 24px 18px;
+        border-radius: 28px;
+      }
+
+      .ticket-detail-card h2 {
+        font-size: 34px;
+      }
+
+      .ticket-detail-card p {
+        font-size: 15px;
+        line-height: 1.35;
+      }
+
+      .detail-icon-box {
+        width: 110px;
+        height: 110px;
+      }
+
+      .detail-icon-box .ticket-icon {
+        width: 110px;
+        height: 110px;
+      }
+
+      .close-ticket-detail {
+        font-size: 22px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .ticket-badge {
+        width: 138px;
+        min-height: 244px;
+      }
+
+      .ticket-inner {
+        min-height: 218px;
+      }
+
+      .ticket-name {
+        font-size: 18px;
+      }
+
+      .ticket-icon {
+        width: 62px;
+        height: 62px;
+      }
+
+      .stamp-card {
+        width: 148px;
+        height: 148px;
+      }
+
+      .stamp-shape {
+        width: 142px;
+        height: 142px;
       }
     }
   </style>
