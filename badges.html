@@ -107,11 +107,9 @@
       width: 210px;
       min-height: 355px;
       position: relative;
-      background: #fff8e9;
       border: 2.5px solid #6f5538;
       color: #5a3d2c;
       padding: 18px 16px;
-      box-shadow: 0 12px 32px rgba(75,47,47,0.14);
       cursor: pointer;
       animation: ticketIn 0.45s ease both;
       clip-path: polygon(
@@ -125,19 +123,36 @@
       transition: 0.25s ease;
     }
 
-    .ticket-badge:hover {
+    .ticket-badge.unlocked {
+      background: #fff8e9;
+      border-color: #6f5538;
+      box-shadow: 0 14px 34px rgba(75,47,47,0.18);
+      opacity: 1;
+      filter: none;
+    }
+
+    .ticket-badge.unlocked .ticket-icon {
+      filter: drop-shadow(0 5px 8px rgba(111,85,56,0.18));
+    }
+
+    .ticket-badge.unlocked:hover {
       transform: translateY(-8px) rotate(-2deg);
-      box-shadow: 0 18px 44px rgba(75,47,47,0.18);
+      box-shadow: 0 20px 48px rgba(75,47,47,0.22);
     }
 
     .ticket-badge.locked {
-      opacity: 0.36;
-      filter: grayscale(0.8);
+      background: #eeeeeb;
+      border-color: #9d968d;
+      color: #8f8982;
       cursor: not-allowed;
+      opacity: 1;
+      filter: grayscale(1);
+      box-shadow: 0 8px 18px rgba(60, 55, 50, 0.08);
     }
 
     .ticket-badge.locked:hover {
       transform: none;
+      box-shadow: 0 8px 18px rgba(60, 55, 50, 0.08);
     }
 
     .ticket-badge::before,
@@ -162,6 +177,12 @@
       bottom: -22px;
     }
 
+    .ticket-badge.locked::before,
+    .ticket-badge.locked::after {
+      background: #fbf6ec;
+      border-color: #9d968d;
+    }
+
     .ticket-inner {
       border: 2px dashed rgba(111,85,56,0.62);
       min-height: 315px;
@@ -177,6 +198,18 @@
           transparent,
           transparent 8px,
           rgba(111,85,56,0.04) 9px
+        );
+    }
+
+    .ticket-badge.locked .ticket-inner {
+      border-color: rgba(128, 122, 115, 0.58);
+      background:
+        linear-gradient(rgba(255,255,255,0.18), rgba(255,255,255,0.18)),
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 8px,
+          rgba(90, 84, 78, 0.04) 9px
         );
     }
 
@@ -202,6 +235,34 @@
       width: 118px;
       height: 118px;
       margin: 8px 0;
+    }
+
+    .locked-icon {
+      width: 118px;
+      height: 118px;
+      margin: 8px 0;
+    }
+
+    .locked-icon circle {
+      fill: none;
+      stroke: #8f8982;
+      stroke-width: 6;
+      stroke-linecap: round;
+      stroke-dasharray: 8 8;
+    }
+
+    .locked-icon text {
+      font-family: 'Patrick Hand', cursive;
+      fill: #8f8982;
+      font-size: 82px;
+    }
+
+    .ticket-badge.locked .ticket-top,
+    .ticket-badge.locked .ticket-name,
+    .ticket-badge.locked .ticket-desc,
+    .ticket-badge.locked .ticket-status {
+      color: #8f8982;
+      border-color: #9d968d;
     }
 
     .ticket-desc {
@@ -533,10 +594,9 @@
         min-height: 252px;
         padding: 12px 10px;
         border-width: 2px;
-        box-shadow: 0 8px 20px rgba(75,47,47,0.12);
       }
 
-      .ticket-badge:hover {
+      .ticket-badge.unlocked:hover {
         transform: none;
       }
 
@@ -574,10 +634,15 @@
         margin: 6px 0 2px;
       }
 
-      .ticket-icon {
+      .ticket-icon,
+      .locked-icon {
         width: 68px;
         height: 68px;
         margin: 4px 0;
+      }
+
+      .locked-icon text {
+        font-size: 66px;
       }
 
       .ticket-desc {
@@ -704,7 +769,8 @@
         font-size: 18px;
       }
 
-      .ticket-icon {
+      .ticket-icon,
+      .locked-icon {
         width: 62px;
         height: 62px;
       }
@@ -906,8 +972,10 @@
 
     function createTicket(ticket, index) {
       const card = document.createElement("div");
-      card.className = ticket.unlocked ? "ticket-badge" : "ticket-badge locked";
+      card.className = ticket.unlocked ? "ticket-badge unlocked" : "ticket-badge locked";
       card.style.animationDelay = `${index * 0.06}s`;
+
+      const iconHTML = ticket.unlocked ? getTicketIcon(ticket.icon) : getLockedIcon();
 
       card.innerHTML = `
         <div class="ticket-inner">
@@ -918,7 +986,7 @@
 
           <div>
             <div class="ticket-name">${ticket.name}</div>
-            ${getTicketIcon(ticket.icon)}
+            ${iconHTML}
           </div>
 
           <div>
@@ -938,6 +1006,15 @@
       }
 
       return card;
+    }
+
+    function getLockedIcon() {
+      return `
+        <svg class="locked-icon" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="80" cy="80" r="52"></circle>
+          <text x="80" y="108" text-anchor="middle">?</text>
+        </svg>
+      `;
     }
 
     function getTicketIcon(type) {
