@@ -415,7 +415,7 @@ body {
   }
 }
 /* =========================
-   MOBILE RESPONSIVE FIX
+   MOBILE HOMEPAGE LIKE CHUN STYLE
    Put this at the bottom of style.css
    ========================= */
 
@@ -430,26 +430,34 @@ body {
   overflow-x: hidden;
 }
 
-/* Phone screen */
 @media screen and (max-width: 768px) {
 
   body {
-    width: 100%;
     overflow-x: hidden;
+    background: #fffaf0;
   }
 
-  /* ===== Top Navigation ===== */
+  /* ===== Mobile Navigation ===== */
   .top-nav {
     width: 100%;
     height: auto;
-    padding: 16px 12px;
+    padding: 18px 16px 14px;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    gap: 8px;
+    gap: 14px;
     overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
+    background: #fffaf0;
+    border-bottom: 1px solid rgba(139, 112, 80, 0.18);
+    position: sticky;
+    top: 0;
+    z-index: 99;
+  }
+
+  .top-nav::-webkit-scrollbar,
+  .nav-links::-webkit-scrollbar {
+    display: none;
   }
 
   .nav-logo {
@@ -457,151 +465,168 @@ body {
   }
 
   .nav-logo img {
-    width: 38px;
+    width: 34px;
     height: auto;
+    display: block;
   }
 
   .nav-links {
     display: flex;
-    flex-direction: row;
     align-items: center;
-    gap: 22px;
+    gap: 28px;
     overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
-    width: 100%;
+    flex: 1;
     padding-right: 20px;
   }
 
   .nav-links a {
-    font-size: 26px;
+    font-size: 25px;
+    line-height: 1;
     flex: 0 0 auto;
-    line-height: 1.1;
   }
 
-  /* ===== Hero Section ===== */
+  /* ===== Hero Mobile Layout ===== */
   .hero-scroll {
+    height: 180vh;
     width: 100%;
     overflow: hidden;
+    background: #fffaf0;
   }
 
   .hero-sticky {
+    position: sticky;
+    top: 0;
+    height: 100svh;
     width: 100%;
     overflow: hidden;
+    background: #fffaf0;
   }
 
   .hero-title {
-    font-size: 28vw;
-    letter-spacing: 4px;
-    max-width: 100%;
+    font-size: clamp(78px, 21vw, 105px);
+    letter-spacing: 0.04em;
+    line-height: 1;
     white-space: nowrap;
+    max-width: 100%;
+    text-align: center;
+    color: #8b704f;
+    z-index: 5;
   }
 
+  /* 手机上先隐藏这一句，不然会很挤 */
   .hero-subtitle {
-    width: 90%;
-    max-width: 90%;
-    font-size: 24px;
-    letter-spacing: 4px;
-    text-align: center;
-    left: 50%;
+    display: none;
   }
 
+  /* 往下滑出现的 should i 那一句 */
   .transition-text {
-    width: 88%;
-    max-width: 88%;
-    font-size: 24px;
+    width: 84%;
+    max-width: 340px;
+    font-size: 27px;
+    line-height: 1.25;
+    letter-spacing: 0.03em;
     text-align: center;
+    color: #8b704f;
+    z-index: 6;
   }
 
   .scroll-text {
     font-size: 24px;
+    color: #8b704f;
+    bottom: 64px;
+    z-index: 8;
   }
 
+  /* ===== Doodle icons like CHUN style ===== */
   .doodle {
-    max-width: 75px;
+    width: 72px;
+    max-width: 72px;
+    opacity: 0.9;
+    z-index: 2;
   }
 
   .doodle1 {
-    left: 25%;
-    top: 22%;
+    left: 31%;
+    top: 26%;
   }
 
   .doodle2 {
-    left: 60%;
-    top: 22%;
+    left: 68%;
+    top: 27%;
   }
 
   .doodle3 {
-    left: 25%;
-    top: 70%;
+    left: 31%;
+    top: 66%;
   }
 
   .doodle4 {
     left: 70%;
-    top: 64%;
+    top: 65%;
   }
 
   .doodle5 {
-    left: 55%;
-    top: 72%;
+    left: 56%;
+    top: 73%;
   }
 
-  /* ===== DinnerBot Section ===== */
+  /* ===== DinnerBot Mobile ===== */
   .chatbot-section {
     width: 100%;
+    padding: 90px 22px;
     overflow: hidden;
-    padding: 80px 18px;
+    background: #f5e5ca;
   }
 
   .chatbot-wrapper {
     width: 100%;
-    max-width: 100%;
+    max-width: 380px;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 28px;
-    margin: 0 auto;
+    gap: 34px;
   }
 
   .chatbot-text {
     width: 100%;
-    max-width: 100%;
     text-align: center;
   }
 
   .chatbot-text h2 {
     font-size: 52px;
     line-height: 1;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
   }
 
   .chatbot-text p {
-    width: 100%;
     max-width: 320px;
     margin: 0 auto;
     font-size: 22px;
-    line-height: 1.3;
+    line-height: 1.35;
   }
 
   .chat-window {
     width: 100%;
-    max-width: 360px;
+    max-width: 350px;
     min-height: 360px;
-    padding: 22px;
-    border-radius: 32px;
+    padding: 24px;
     margin: 0 auto;
+    border-radius: 34px;
   }
 
   #chatMessages {
     width: 100%;
-    max-height: 220px;
+    max-height: 210px;
     overflow-y: auto;
   }
 
   .message {
     max-width: 100%;
     font-size: 21px;
-    line-height: 1.3;
+    line-height: 1.35;
   }
 
   .chat-input {
@@ -624,24 +649,24 @@ body {
     padding: 14px 18px;
   }
 
-  /* ===== Dinner Video Section ===== */
+  /* ===== Video Section Mobile ===== */
   .dinner-menu-section {
     width: 100%;
-    padding: 70px 18px;
+    padding: 80px 20px;
     overflow: hidden;
   }
 
   .dinner-menu-section h2 {
-    font-size: 44px;
+    font-size: 46px;
     text-align: center;
   }
 
   .section-subtitle {
-    width: 100%;
     max-width: 330px;
     margin: 0 auto 30px;
     font-size: 22px;
     text-align: center;
+    line-height: 1.35;
   }
 
   .interactive-video-box {
@@ -680,28 +705,30 @@ body {
   }
 }
 
-/* Smaller phone */
 @media screen and (max-width: 430px) {
 
   .nav-links a {
-    font-size: 24px;
+    font-size: 23px;
+  }
+
+  .nav-links {
+    gap: 24px;
   }
 
   .hero-title {
-    font-size: 30vw;
-    letter-spacing: 2px;
+    font-size: clamp(76px, 20vw, 92px);
   }
 
-  .hero-subtitle {
-    font-size: 22px;
-    letter-spacing: 3px;
+  .transition-text {
+    font-size: 25px;
+  }
+
+  .doodle {
+    width: 64px;
+    max-width: 64px;
   }
 
   .chat-window {
-    max-width: 330px;
-  }
-
-  .chatbot-text h2 {
-    font-size: 46px;
+    max-width: 335px;
   }
 }
