@@ -54,20 +54,20 @@ document.addEventListener("DOMContentLoaded", function () {
     if (progress < 0.16) {
       transitionText.style.opacity = 0;
       transitionText.style.transform = "translate(-50%, 40px)";
-    } 
-    
+    }
+
     else if (progress >= 0.16 && progress < 0.34) {
       const appearProgress = (progress - 0.16) / 0.18;
 
       transitionText.style.opacity = appearProgress;
       transitionText.style.transform = "translate(-50%, -50%)";
-    } 
-    
+    }
+
     else if (progress >= 0.34 && progress < 0.80) {
       transitionText.style.opacity = 1;
       transitionText.style.transform = "translate(-50%, -50%)";
-    } 
-    
+    }
+
     else if (progress >= 0.80 && progress <= 1) {
       const disappearProgress = (progress - 0.80) / 0.20;
 
@@ -80,8 +80,16 @@ document.addEventListener("DOMContentLoaded", function () {
   /* ===== INTERACTIVE VIDEO ===== */
 
   if (dinnerVideo && videoChoices) {
+    videoChoices.style.display = "none";
+
     dinnerVideo.addEventListener("ended", function () {
-      videoChoices.style.display = "flex";
+      const currentVideoName = dinnerVideo.currentSrc.split("/").pop();
+
+      if (currentVideoName === "video1.mp4") {
+        videoChoices.style.display = "flex";
+      } else {
+        videoChoices.style.display = "none";
+      }
     });
   }
 
@@ -234,22 +242,52 @@ document.addEventListener("DOMContentLoaded", function () {
 
 /* ===== VIDEO BUTTON FUNCTIONS ===== */
 
-function changeVideo(videoPath) {
+function playDinnerVideo(videoPath) {
   const dinnerVideo = document.getElementById("dinnerVideo");
   const videoChoices = document.getElementById("videoChoices");
 
-  dinnerVideo.src = videoPath;
+  if (!dinnerVideo) {
+    return;
+  }
+
+  dinnerVideo.pause();
+
+  const source = dinnerVideo.querySelector("source");
+
+  if (source) {
+    source.src = videoPath;
+    dinnerVideo.removeAttribute("src");
+  } else {
+    dinnerVideo.src = videoPath;
+  }
+
   dinnerVideo.load();
-  dinnerVideo.play();
-  videoChoices.style.display = "none";
+
+  dinnerVideo.addEventListener(
+    "loadedmetadata",
+    function () {
+      dinnerVideo.currentTime = 0;
+
+      const playPromise = dinnerVideo.play();
+
+      if (playPromise !== undefined) {
+        playPromise.catch(function () {
+          console.log("Autoplay was blocked. Please press play manually.");
+        });
+      }
+    },
+    { once: true }
+  );
+
+  if (videoChoices) {
+    videoChoices.style.display = "none";
+  }
+}
+
+function changeVideo(videoPath) {
+  playDinnerVideo(videoPath);
 }
 
 function restartVideo() {
-  const dinnerVideo = document.getElementById("dinnerVideo");
-  const videoChoices = document.getElementById("videoChoices");
-
-  dinnerVideo.src = "videos/video1.mp4";
-  dinnerVideo.load();
-  dinnerVideo.play();
-  videoChoices.style.display = "none";
+  playDinnerVideo("video1.mp4");
 }
