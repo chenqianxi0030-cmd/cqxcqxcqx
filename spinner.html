@@ -12,6 +12,17 @@
   <link rel="stylesheet" href="style.css">
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
     .spinner-page {
       min-height: 100vh;
       padding-top: 120px;
@@ -37,6 +48,7 @@
       font-size: 96px;
       color: #8b6f4e;
       margin-bottom: 8px;
+      line-height: 1;
     }
 
     .spinner-hero p {
@@ -112,24 +124,26 @@
       border: 2px dashed rgba(139,111,78,0.45);
       border-radius: 50%;
       pointer-events: none;
+      z-index: 2;
     }
 
     .wheel-label {
       position: absolute;
       left: 50%;
       top: 50%;
-      width: 135px;
-      height: 24px;
-      margin-left: -67.5px;
-      margin-top: -12px;
-      transform-origin: 50% 170px;
+      width: 120px;
+      min-height: 22px;
+      margin-left: -60px;
+      margin-top: -11px;
       font-family: 'Patrick Hand', cursive;
-      font-size: 21px;
-      color: #6f5538;
+      font-size: 19px;
+      line-height: 1;
+      color: #5f4933;
       text-align: center;
-      z-index: 3;
+      z-index: 4;
       pointer-events: none;
-      white-space: nowrap;
+      white-space: normal;
+      word-break: break-word;
     }
 
     .wheel-center {
@@ -187,6 +201,7 @@
       color: #8b6f4e;
       margin-bottom: 18px;
       text-align: center;
+      line-height: 1;
     }
 
     .result-sticker {
@@ -210,6 +225,7 @@
       color: #4b2f2f;
       text-align: center;
       margin-bottom: 12px;
+      line-height: 1;
     }
 
     .result-desc {
@@ -231,6 +247,7 @@
       font-size: 48px;
       color: #8b6f4e;
       margin-bottom: 16px;
+      line-height: 1;
     }
 
     .add-option-row {
@@ -339,40 +356,187 @@
       }
 
       .wheel-label {
-        transform-origin: 50% 145px;
-        font-size: 18px;
+        width: 96px;
+        margin-left: -48px;
+        font-size: 16px;
       }
     }
 
     @media (max-width: 620px) {
+      .spinner-page {
+        padding-top: 105px;
+        padding-bottom: 70px;
+      }
+
+      .spinner-hero {
+        padding: 0 22px;
+        margin-bottom: 28px;
+      }
+
       .spinner-hero h1 {
-        font-size: 68px;
+        font-size: 64px;
+        line-height: 0.95;
+        margin-bottom: 14px;
+      }
+
+      .spinner-hero p {
+        max-width: 330px;
+        font-size: 21px;
+        line-height: 1.35;
+      }
+
+      .spinner-layout {
+        width: calc(100% - 24px);
+        gap: 28px;
       }
 
       .spinner-card,
       .result-panel,
       .option-editor {
-        padding: 28px 20px;
+        padding: 28px 18px;
+        border-radius: 34px;
       }
 
       .wheel-wrapper {
         width: 300px;
         height: 300px;
+        margin-bottom: 30px;
+      }
+
+      .wheel-pointer {
+        top: -4px;
+        border-left-width: 18px;
+        border-right-width: 18px;
+        border-top-width: 34px;
       }
 
       .wheel {
         width: 280px;
         height: 280px;
+        border-width: 5px;
+      }
+
+      .wheel::after {
+        inset: 17px;
       }
 
       .wheel-center {
         width: 104px;
         height: 104px;
         font-size: 27px;
+        border-width: 7px;
       }
 
       .wheel-label {
-        display: none;
+        display: block !important;
+        width: 62px;
+        min-height: 18px;
+        margin-left: -31px;
+        margin-top: -9px;
+        font-size: 12px !important;
+        line-height: 0.95;
+        color: #5f4933;
+        z-index: 4;
+        white-space: normal;
+        word-break: break-word;
+      }
+
+      .spin-button {
+        font-size: 28px;
+        padding: 13px 34px;
+      }
+
+      .result-panel {
+        min-height: auto;
+      }
+
+      .result-panel h2 {
+        font-size: 44px;
+      }
+
+      .result-sticker {
+        width: 145px;
+        height: 145px;
+        border-radius: 30px;
+        font-size: 58px;
+        border-width: 8px;
+      }
+
+      .result-food {
+        font-size: 34px;
+      }
+
+      .result-desc {
+        font-size: 17px;
+        max-width: 300px;
+      }
+
+      .option-editor {
+        width: calc(100% - 24px);
+        margin-top: 34px;
+      }
+
+      .option-editor h2 {
+        font-size: 40px;
+      }
+
+      .add-option-row {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .add-option-row input {
+        width: 100%;
+        max-width: 310px;
+        font-size: 16px;
+      }
+
+      .add-option-row button,
+      .reset-options-btn {
+        width: 100%;
+        max-width: 310px;
+        font-size: 23px;
+      }
+
+      .option-tags {
+        gap: 10px;
+      }
+
+      .option-tag {
+        font-size: 15px;
+        padding: 9px 13px;
+      }
+    }
+
+    @media (max-width: 390px) {
+      .spinner-hero h1 {
+        font-size: 58px;
+      }
+
+      .spinner-hero p {
+        font-size: 19px;
+      }
+
+      .wheel-wrapper {
+        width: 272px;
+        height: 272px;
+      }
+
+      .wheel {
+        width: 254px;
+        height: 254px;
+      }
+
+      .wheel-center {
+        width: 94px;
+        height: 94px;
+        font-size: 25px;
+      }
+
+      .wheel-label {
+        width: 56px;
+        margin-left: -28px;
+        font-size: 11px !important;
       }
     }
   </style>
@@ -485,12 +649,12 @@
         desc: "A good choice for sharing with friends and eating something warm."
       },
       {
-        name: "Burger Set",
+        name: "Burger",
         emoji: "🍔",
         desc: "Quick and satisfying. A good choice when you want fast food."
       },
       {
-        name: "Korean Fried Chicken",
+        name: "Chicken",
         emoji: "🍗",
         desc: "Crispy, flavourful, and great for a fun dinner."
       },
@@ -500,7 +664,7 @@
         desc: "Rich, warm, and filling. A good dinner if you want rice."
       },
       {
-        name: "Salad Bowl",
+        name: "Salad",
         emoji: "🥗",
         desc: "A lighter and healthier option when you do not want something too heavy."
       }
@@ -508,15 +672,49 @@
 
     const OPTION_KEY = "foodSpinnerOptions";
 
-    let foods = JSON.parse(localStorage.getItem(OPTION_KEY)) || defaultFoods;
+    let foods = loadOptions();
     let currentRotation = 0;
     let latestFood = null;
 
     renderWheel();
     renderOptionTags();
 
+    window.addEventListener("resize", function () {
+      renderWheel();
+    });
+
+    function loadOptions() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(OPTION_KEY));
+
+        if (Array.isArray(saved) && saved.length > 0) {
+          return saved;
+        }
+
+        return defaultFoods;
+      } catch (error) {
+        return defaultFoods;
+      }
+    }
+
     function saveOptions() {
       localStorage.setItem(OPTION_KEY, JSON.stringify(foods));
+    }
+
+    function getLabelRadius() {
+      if (window.innerWidth <= 390) {
+        return 82;
+      }
+
+      if (window.innerWidth <= 620) {
+        return 92;
+      }
+
+      if (window.innerWidth <= 980) {
+        return 124;
+      }
+
+      return 145;
     }
 
     function renderWheel() {
@@ -548,7 +746,7 @@
 
       let gradient = "conic-gradient(";
 
-      foods.forEach((food, index) => {
+      foods.forEach(function (food, index) {
         const start = index * segment;
         const end = (index + 1) * segment;
 
@@ -569,13 +767,14 @@
 
       wheel.style.background = gradient;
 
-      foods.forEach((food, index) => {
+      foods.forEach(function (food, index) {
         const label = document.createElement("div");
         label.className = "wheel-label";
 
         const angle = index * segment + segment / 2;
+        const labelRadius = getLabelRadius();
 
-        label.style.transform = `rotate(${angle}deg) translateY(-145px) rotate(${-angle}deg)`;
+        label.style.transform = `rotate(${angle}deg) translateY(-${labelRadius}px) rotate(${-angle}deg)`;
         label.textContent = shortenText(food.name);
 
         wheel.appendChild(label);
@@ -583,11 +782,21 @@
     }
 
     function shortenText(text) {
-      if (text.length <= 13) {
+      let limit = 13;
+
+      if (window.innerWidth <= 390) {
+        limit = 6;
+      } else if (window.innerWidth <= 620) {
+        limit = 8;
+      } else if (window.innerWidth <= 980) {
+        limit = 10;
+      }
+
+      if (text.length <= limit) {
         return text;
       }
 
-      return text.slice(0, 12) + "...";
+      return text.slice(0, limit - 1) + ".";
     }
 
     function renderOptionTags() {
@@ -599,7 +808,7 @@
         return;
       }
 
-      foods.forEach((food, index) => {
+      foods.forEach(function (food, index) {
         const tag = document.createElement("div");
         tag.className = "option-tag";
 
@@ -643,7 +852,13 @@
     }
 
     function resetOptions() {
-      foods = [...defaultFoods];
+      foods = defaultFoods.map(function (food) {
+        return {
+          name: food.name,
+          emoji: food.emoji,
+          desc: food.desc
+        };
+      });
 
       saveOptions();
       renderWheel();
@@ -684,7 +899,7 @@
 
       wheel.style.transform = `rotate(${currentRotation}deg)`;
 
-      setTimeout(() => {
+      setTimeout(function () {
         resultSticker.textContent = latestFood.emoji || "🍽️";
         resultFood.textContent = latestFood.name;
         resultDesc.textContent = latestFood.desc || "This sounds like a good dinner idea tonight.";
