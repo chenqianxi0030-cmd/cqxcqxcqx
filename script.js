@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const chatMessages = document.getElementById("chatMessages");
 
 
-  /* ===== HERO SCROLL ANIMATION ===== */
+  /* ===== HERO SCROLL ANIMATION - OLD LOOK RESTORED ===== */
 
   function clamp(value, min, max) {
     return Math.min(Math.max(value, min), max);
@@ -33,8 +33,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const isMobile = window.innerWidth <= 768;
 
-    const titleMove = isMobile ? progress * 290 : progress * 470;
-    const titleOpacity = clamp(1 - progress * 1.25, 0, 1);
+    /*
+      旧版效果：
+      DINNER 不会马上消失
+      往下滑时 Should I eat... 出现在上面
+      DINNER 会变淡并往下移动
+    */
+
+    const titleMove = isMobile ? progress * 260 : progress * 360;
+    const titleOpacity = clamp(1 - progress * 0.85, 0.18, 1);
 
     heroTitle.style.transform = `translate(-50%, calc(-50% + ${titleMove}px))`;
     heroTitle.style.opacity = titleOpacity;
@@ -43,12 +50,12 @@ document.addEventListener("DOMContentLoaded", function () {
       if (isMobile) {
         heroSubtitle.style.opacity = 0;
       } else {
-        heroSubtitle.style.opacity = clamp(1 - progress * 3, 0, 1);
+        heroSubtitle.style.opacity = clamp(1 - progress * 2.5, 0, 1);
       }
     }
 
     doodles.forEach(function (doodle) {
-      const doodleOpacity = clamp(0.9 - progress * 1.15, 0, 0.9);
+      const doodleOpacity = clamp(0.9 - progress * 0.75, 0.18, 0.9);
       doodle.style.opacity = doodleOpacity;
     });
 
@@ -56,56 +63,33 @@ document.addEventListener("DOMContentLoaded", function () {
       scrollText.style.opacity = clamp(1 - progress * 4, 0, 1);
     }
 
-    if (isMobile) {
-      if (progress < 0.16) {
-        transitionText.style.opacity = 0;
-        transitionText.style.transform = "translate(-50%, 55px)";
-      }
+    /*
+      Should I eat... 出现的位置
+      这里调成你截图里的样子：在 DINNER 上面
+    */
 
-      else if (progress >= 0.16 && progress < 0.32) {
-        const appearProgress = (progress - 0.16) / 0.16;
+    if (progress < 0.12) {
+      transitionText.style.opacity = 0;
+      transitionText.style.transform = "translate(-50%, 20px)";
+    }
 
-        transitionText.style.opacity = appearProgress;
-        transitionText.style.transform = "translate(-50%, -50%)";
-      }
+    else if (progress >= 0.12 && progress < 0.28) {
+      const appearProgress = (progress - 0.12) / 0.16;
 
-      else if (progress >= 0.32 && progress < 0.96) {
-        transitionText.style.opacity = 1;
-        transitionText.style.transform = "translate(-50%, -50%)";
-      }
+      transitionText.style.opacity = appearProgress;
+      transitionText.style.transform = "translate(-50%, -130px)";
+    }
 
-      else {
-        const disappearProgress = (progress - 0.96) / 0.04;
-
-        transitionText.style.opacity = clamp(1 - disappearProgress, 0, 1);
-        transitionText.style.transform = `translate(-50%, calc(-50% + ${disappearProgress * 70}px))`;
-      }
+    else if (progress >= 0.28 && progress < 0.86) {
+      transitionText.style.opacity = 1;
+      transitionText.style.transform = "translate(-50%, -130px)";
     }
 
     else {
-      if (progress < 0.14) {
-        transitionText.style.opacity = 0;
-        transitionText.style.transform = "translate(-50%, 50px)";
-      }
+      const disappearProgress = (progress - 0.86) / 0.14;
 
-      else if (progress >= 0.14 && progress < 0.28) {
-        const appearProgress = (progress - 0.14) / 0.14;
-
-        transitionText.style.opacity = appearProgress;
-        transitionText.style.transform = "translate(-50%, -50%)";
-      }
-
-      else if (progress >= 0.28 && progress < 0.96) {
-        transitionText.style.opacity = 1;
-        transitionText.style.transform = "translate(-50%, -50%)";
-      }
-
-      else {
-        const disappearProgress = (progress - 0.96) / 0.04;
-
-        transitionText.style.opacity = clamp(1 - disappearProgress, 0, 1);
-        transitionText.style.transform = `translate(-50%, calc(-50% + ${disappearProgress * 90}px))`;
-      }
+      transitionText.style.opacity = clamp(1 - disappearProgress, 0, 1);
+      transitionText.style.transform = `translate(-50%, calc(-130px + ${disappearProgress * 90}px))`;
     }
   }
 
