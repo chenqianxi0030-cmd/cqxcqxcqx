@@ -292,7 +292,7 @@ function restartVideo() {
     videoError.style.display = "none";
   }
 
-  dinnerVideo.src = "./videos/video1.mp4";
+  dinnerVideo.src = "./video1.mp4";
   dinnerVideo.load();
 
   const playPromise = dinnerVideo.play();
@@ -304,4 +304,4 @@ function restartVideo() {
   }
 
   videoChoices.style.display = "none";
-}
+}s
