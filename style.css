@@ -498,3 +498,38 @@ body {
     font-size: 60px;
   }
 }
+/* ===== EXTRA SMALL MOBILE NAV ===== */
+
+@media (max-width: 900px) {
+  .top-nav {
+    min-height: 52px;
+    padding: 6px 12px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px 14px;
+  }
+
+  .nav-logo {
+    width: 30px;
+    height: 30px;
+    margin-right: 6px;
+  }
+
+  .nav-logo svg,
+  .nav-logo img {
+    width: 28px;
+    height: 28px;
+  }
+
+  .nav-links {
+    gap: 14px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .nav-links a {
+    font-size: 18px;
+    line-height: 1.05;
+  }
+}
